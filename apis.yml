@@ -1,0 +1,79 @@
+name: Eclipse RDF4J
+description: Eclipse RDF4J is a powerful Java framework for processing and handling RDF data. This includes creating, parsing, scalable storage, reasoning and querying with RDF and Linked Data. It offers an easy-to-use API that can be connected to all leading RDF database solutions.
+image: https://rdf4j.org/images/rdf4j-logo.svg
+url: https://rdf4j.org/
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+tags:
+- RDF
+- Semantic Web
+- Linked Data
+- Triple Store
+- SPARQL
+- Java
+- Open Source
+apis:
+- name: RDF4J Server REST API
+  description: REST API for managing repositories, importing/exporting data, and executing SPARQL queries on RDF4J Server
+  image: https://rdf4j.org/images/rdf4j-logo.svg
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - RDF
+  - SPARQL
+  - Repository
+  - REST
+  properties:
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: OpenAPI
+    url: https://rdf4j.org/javadoc/latest/
+  - type: Swagger
+    url: http://localhost:8080/rdf4j-server/openapi.json
+  contact:
+  - FN: Eclipse RDF4J Community
+    email: rdf4j-dev@eclipse.org
+- name: RDF4J Workbench
+  description: Web-based interface for interacting with RDF repositories, exploring data, and executing queries
+  image: https://rdf4j.org/images/rdf4j-logo.svg
+  humanURL: https://rdf4j.org/documentation/tools/workbench/
+  baseURL: http://localhost:8080/rdf4j-workbench
+  tags:
+  - RDF
+  - UI
+  - Workbench
+  - Query
+  properties:
+  - type: Documentation
+    url: https://rdf4j.org/documentation/tools/workbench/
+  - type: UserGuide
+    url: https://rdf4j.org/documentation/
+maintainers:
+- FN: Eclipse Foundation
+  email: rdf4j-dev@eclipse.org
+  url: https://www.eclipse.org/
+include:
+- name: GitHub Repository
+  url: https://github.com/eclipse/rdf4j
+- name: Maven Repository
+  url: https://mvnrepository.com/artifact/org.eclipse.rdf4j
+- name: Documentation
+  url: https://rdf4j.org/documentation/
+- name: Javadoc
+  url: https://rdf4j.org/javadoc/latest/
+- name: Community Forum
+  url: https://github.com/eclipse/rdf4j/discussions
+common:
+- type: GettingStarted
+  url: https://rdf4j.org/documentation/programming/getting-started/
+- type: Tutorials
+  url: https://rdf4j.org/documentation/tutorials/
+- type: License
+  url: https://github.com/eclipse/rdf4j/blob/main/LICENSE.md
+- type: Changelog
+  url: https://rdf4j.org/release-notes/
+- type: Support
+  url: https://github.com/eclipse/rdf4j/discussions
+- type: Issues
+  url: https://github.com/eclipse/rdf4j/issues
