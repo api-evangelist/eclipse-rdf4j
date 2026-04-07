@@ -8,13 +8,13 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
+  - Java
+  - Linked Data
+  - Open Source
   - RDF
   - Semantic Web
-  - Linked Data
-  - Triple Store
   - SPARQL
-  - Java
-  - Open Source
+  - Triple Store
 url: https://rdf4j.org/
 created: '2024-01-01'
 modified: '2026-03-16'
@@ -29,9 +29,9 @@ apis:
     baseURL: http://localhost:8080/rdf4j-server
     tags:
       - RDF
-      - SPARQL
       - Repository
       - REST
+      - SPARQL
     properties:
       - type: Documentation
         url: https://rdf4j.org/documentation/reference/rest-api/
