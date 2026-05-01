@@ -1,0 +1,515 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST API
+  description: >-
+    REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage
+    RDF repositories, configure them, query and update their contents using SPARQL,
+    manage namespaces, transactions, contexts and statements, and import/export RDF
+    data in standard serialization formats. The Eclipse RDF4J Server is a Java
+    server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/
+servers:
+  - url: http://localhost:8080/rdf4j-server
+    description: Default local RDF4J Server installation
+tags:
+  - name: Protocol
+    description: Protocol version of the server.
+  - name: Repositories
+    description: Manage and inspect RDF repositories.
+  - name: Statements
+    description: Read and modify the RDF statements in a repository.
+  - name: Namespaces
+    description: Manage namespace prefix declarations.
+  - name: Contexts
+    description: Inspect named graphs (contexts) in a repository.
+  - name: Size
+    description: Get the number of statements in a repository.
+  - name: Transactions
+    description: Group multiple operations in an atomic transaction.
+paths:
+  /protocol:
+    get:
+      tags: [Protocol]
+      summary: Get protocol version
+      description: Returns the protocol version supported by the RDF4J Server.
+      operationId: getProtocolVersion
+      responses:
+        '200':
+          description: Protocol version as plain text.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '12'
+  /repositories:
+    get:
+      tags: [Repositories]
+      summary: List repositories
+      description: Returns a list of all repositories available on the server.
+      operationId: listRepositories
+      responses:
+        '200':
+          description: SPARQL results with one row per repository.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+            application/sparql-results+xml:
+              schema:
+                type: string
+  /repositories/{repositoryID}:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags: [Repositories]
+      summary: Query repository (SPARQL)
+      description: >-
+        Execute a SPARQL query (SELECT, ASK, CONSTRUCT, DESCRIBE) against the
+        repository. The query may be passed via the `query` query parameter.
+      operationId: queryRepository
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          description: SPARQL query string.
+        - name: queryLn
+          in: query
+          required: false
+          schema:
+            type: string
+            default: sparql
+        - name: infer
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: 'default-graph-uri'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: uri
+        - name: 'named-graph-uri'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: uri
+      responses:
+        '200':
+          description: Query result.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+            application/rdf+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+        '400':
+          description: Malformed query.
+        '404':
+          description: Repository not found.
+    post:
+      tags: [Repositories]
+      summary: SPARQL query or update
+      description: >-
+        Execute a SPARQL query or SPARQL Update via POST. Use form parameters
+        `query` or `update`, or send the SPARQL query/update as the request body
+        with the appropriate `Content-Type`.
+      operationId: postQueryOrUpdate
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+                queryLn:
+                  type: string
+                  default: sparql
+                infer:
+                  type: boolean
+                  default: true
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Query or update result.
+        '204':
+          description: Update applied successfully.
+        '400':
+          description: Malformed query or update.
+        '404':
+          description: Repository not found.
+    put:
+      tags: [Repositories]
+      summary: Create or configure repository
+      description: >-
+        Create or replace the repository configuration for the specified ID.
+        Body contains an RDF representation of the repository configuration.
+      operationId: createRepository
+      requestBody:
+        required: true
+        content:
+          application/x-turtle:
+            schema:
+              type: string
+          application/rdf+xml:
+            schema:
+              type: string
+      responses:
+        '204':
+          description: Repository created or updated.
+        '400':
+          description: Malformed configuration.
+    delete:
+      tags: [Repositories]
+      summary: Delete repository
+      description: Delete the repository and all of its data.
+      operationId: deleteRepository
+      responses:
+        '204':
+          description: Repository deleted.
+        '404':
+          description: Repository not found.
+  /repositories/{repositoryID}/statements:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags: [Statements]
+      summary: Get statements
+      description: >-
+        Retrieve RDF statements matching an optional triple pattern (subj, pred,
+        obj, context).
+      operationId: getStatements
+      parameters:
+        - name: subj
+          in: query
+          schema: { type: string }
+        - name: pred
+          in: query
+          schema: { type: string }
+        - name: obj
+          in: query
+          schema: { type: string }
+        - name: context
+          in: query
+          schema:
+            type: array
+            items: { type: string }
+        - name: infer
+          in: query
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Matching RDF statements.
+          content:
+            application/rdf+xml:
+              schema: { type: string }
+            text/turtle:
+              schema: { type: string }
+            application/n-triples:
+              schema: { type: string }
+    post:
+      tags: [Statements]
+      summary: Add or update statements
+      description: >-
+        Add RDF data to the repository, or apply a SPARQL Update via the form
+        parameter `update`.
+      operationId: addStatements
+      parameters:
+        - name: context
+          in: query
+          schema:
+            type: array
+            items: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/rdf+xml:
+            schema: { type: string }
+          text/turtle:
+            schema: { type: string }
+          application/n-triples:
+            schema: { type: string }
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                update:
+                  type: string
+      responses:
+        '204':
+          description: Statements added or update applied.
+        '400':
+          description: Malformed RDF or update.
+    put:
+      tags: [Statements]
+      summary: Replace statements
+      description: Clear the repository (or specified context) and replace its content with the supplied RDF data.
+      operationId: replaceStatements
+      parameters:
+        - name: context
+          in: query
+          schema:
+            type: array
+            items: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/rdf+xml:
+            schema: { type: string }
+          text/turtle:
+            schema: { type: string }
+      responses:
+        '204':
+          description: Statements replaced.
+    delete:
+      tags: [Statements]
+      summary: Remove statements
+      description: Remove statements matching the optional triple pattern.
+      operationId: removeStatements
+      parameters:
+        - name: subj
+          in: query
+          schema: { type: string }
+        - name: pred
+          in: query
+          schema: { type: string }
+        - name: obj
+          in: query
+          schema: { type: string }
+        - name: context
+          in: query
+          schema:
+            type: array
+            items: { type: string }
+      responses:
+        '204':
+          description: Statements removed.
+  /repositories/{repositoryID}/size:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags: [Size]
+      summary: Get repository size
+      description: Returns the number of (explicit) statements in the repository or context.
+      operationId: getRepositorySize
+      parameters:
+        - name: context
+          in: query
+          schema:
+            type: array
+            items: { type: string }
+      responses:
+        '200':
+          description: Statement count as plain text.
+          content:
+            text/plain:
+              schema:
+                type: integer
+                format: int64
+  /repositories/{repositoryID}/contexts:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags: [Contexts]
+      summary: List contexts
+      description: List all named graph (context) IRIs in the repository.
+      operationId: listContexts
+      responses:
+        '200':
+          description: SPARQL results listing context IRIs.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+  /repositories/{repositoryID}/namespaces:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags: [Namespaces]
+      summary: List namespaces
+      description: List all namespace prefix declarations in the repository.
+      operationId: listNamespaces
+      responses:
+        '200':
+          description: SPARQL results with prefix and namespace.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+    delete:
+      tags: [Namespaces]
+      summary: Clear namespaces
+      description: Remove all namespace prefix declarations from the repository.
+      operationId: clearNamespaces
+      responses:
+        '204':
+          description: Namespaces cleared.
+  /repositories/{repositoryID}/namespaces/{prefix}:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+      - name: prefix
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The namespace prefix.
+    get:
+      tags: [Namespaces]
+      summary: Get namespace
+      description: Get the namespace IRI for a given prefix.
+      operationId: getNamespace
+      responses:
+        '200':
+          description: Namespace IRI as plain text.
+          content:
+            text/plain:
+              schema: { type: string }
+        '404':
+          description: Prefix not found.
+    put:
+      tags: [Namespaces]
+      summary: Set namespace
+      description: Set the namespace IRI for the given prefix.
+      operationId: setNamespace
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema: { type: string }
+      responses:
+        '204':
+          description: Namespace set.
+    delete:
+      tags: [Namespaces]
+      summary: Delete namespace
+      description: Remove the namespace declaration for the given prefix.
+      operationId: deleteNamespace
+      responses:
+        '204':
+          description: Namespace removed.
+  /repositories/{repositoryID}/transactions:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+    post:
+      tags: [Transactions]
+      summary: Begin transaction
+      description: Start a new transaction. The `Location` header of the response holds the transaction URL.
+      operationId: beginTransaction
+      responses:
+        '201':
+          description: Transaction started.
+          headers:
+            Location:
+              schema: { type: string, format: uri }
+              description: URL of the new transaction resource.
+  /repositories/{repositoryID}/transactions/{transactionID}:
+    parameters:
+      - $ref: '#/components/parameters/RepositoryID'
+      - name: transactionID
+        in: path
+        required: true
+        schema: { type: string }
+    put:
+      tags: [Transactions]
+      summary: Execute transaction action
+      description: >-
+        Perform an action within the transaction. The action is selected via the
+        `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`,
+        `CLEAR`, `COMMIT`, `PING`).
+      operationId: executeTransactionAction
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [ADD, DELETE, UPDATE, GET, SIZE, CLEAR, COMMIT, PING]
+      requestBody:
+        required: false
+        content:
+          application/rdf+xml:
+            schema: { type: string }
+          text/turtle:
+            schema: { type: string }
+          application/sparql-update:
+            schema: { type: string }
+      responses:
+        '200':
+          description: Action executed.
+        '204':
+          description: Action executed (no content).
+    delete:
+      tags: [Transactions]
+      summary: Rollback transaction
+      description: Abort the transaction and discard all changes.
+      operationId: rollbackTransaction
+      responses:
+        '204':
+          description: Transaction rolled back.
+components:
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+  schemas:
+    SparqlResults:
+      type: object
+      description: SPARQL 1.1 Query Results JSON Format.
+      properties:
+        head:
+          type: object
+          properties:
+            vars:
+              type: array
+              items: { type: string }
+        results:
+          type: object
+          properties:
+            bindings:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    type: { type: string }
+                    value: { type: string }
+                    'xml:lang': { type: string }
+                    datatype: { type: string }
