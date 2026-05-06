@@ -1,0 +1,774 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RDF4J Server REST API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them,
+    query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export
+    RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol
+    over HTTP.
+  tags:
+  - Eclipse
+  - Rdf4j
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: eclipse-rdf4j
+    baseUri: http://localhost:8080/rdf4j-server
+    description: RDF4J Server REST API HTTP API.
+    resources:
+    - name: protocol
+      path: /protocol
+      operations:
+      - name: getprotocolversion
+        method: GET
+        description: Get protocol version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories
+      path: /repositories
+      operations:
+      - name: listrepositories
+        method: GET
+        description: List repositories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid
+      path: /repositories/{repositoryID}
+      operations:
+      - name: queryrepository
+        method: GET
+        description: Query repository (SPARQL)
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          required: true
+          description: SPARQL query string.
+        - name: queryLn
+          in: query
+          type: string
+        - name: infer
+          in: query
+          type: boolean
+        - name: default-graph-uri
+          in: query
+          type: array
+        - name: named-graph-uri
+          in: query
+          type: array
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: postqueryorupdate
+        method: POST
+        description: SPARQL query or update
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createrepository
+        method: PUT
+        description: Create or configure repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleterepository
+        method: DELETE
+        description: Delete repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-statements
+      path: /repositories/{repositoryID}/statements
+      operations:
+      - name: getstatements
+        method: GET
+        description: Get statements
+        inputParameters:
+        - name: subj
+          in: query
+          type: string
+        - name: pred
+          in: query
+          type: string
+        - name: obj
+          in: query
+          type: string
+        - name: context
+          in: query
+          type: array
+        - name: infer
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addstatements
+        method: POST
+        description: Add or update statements
+        inputParameters:
+        - name: context
+          in: query
+          type: array
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacestatements
+        method: PUT
+        description: Replace statements
+        inputParameters:
+        - name: context
+          in: query
+          type: array
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: removestatements
+        method: DELETE
+        description: Remove statements
+        inputParameters:
+        - name: subj
+          in: query
+          type: string
+        - name: pred
+          in: query
+          type: string
+        - name: obj
+          in: query
+          type: string
+        - name: context
+          in: query
+          type: array
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-size
+      path: /repositories/{repositoryID}/size
+      operations:
+      - name: getrepositorysize
+        method: GET
+        description: Get repository size
+        inputParameters:
+        - name: context
+          in: query
+          type: array
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-contexts
+      path: /repositories/{repositoryID}/contexts
+      operations:
+      - name: listcontexts
+        method: GET
+        description: List contexts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-namespaces
+      path: /repositories/{repositoryID}/namespaces
+      operations:
+      - name: listnamespaces
+        method: GET
+        description: List namespaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: clearnamespaces
+        method: DELETE
+        description: Clear namespaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-namespaces-prefix
+      path: /repositories/{repositoryID}/namespaces/{prefix}
+      operations:
+      - name: getnamespace
+        method: GET
+        description: Get namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: setnamespace
+        method: PUT
+        description: Set namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletenamespace
+        method: DELETE
+        description: Delete namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-transactions
+      path: /repositories/{repositoryID}/transactions
+      operations:
+      - name: begintransaction
+        method: POST
+        description: Begin transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryid-transactions-transacti
+      path: /repositories/{repositoryID}/transactions/{transactionID}
+      operations:
+      - name: executetransactionaction
+        method: PUT
+        description: Execute transaction action
+        inputParameters:
+        - name: action
+          in: query
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: rollbacktransaction
+        method: DELETE
+        description: Rollback transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: eclipse-rdf4j-rest
+    description: REST adapter for RDF4J Server REST API.
+    resources:
+    - path: /protocol
+      name: getprotocolversion
+      operations:
+      - method: GET
+        name: getprotocolversion
+        description: Get protocol version
+        call: eclipse-rdf4j.getprotocolversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories
+      name: listrepositories
+      operations:
+      - method: GET
+        name: listrepositories
+        description: List repositories
+        call: eclipse-rdf4j.listrepositories
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}
+      name: queryrepository
+      operations:
+      - method: GET
+        name: queryrepository
+        description: Query repository (SPARQL)
+        call: eclipse-rdf4j.queryrepository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}
+      name: postqueryorupdate
+      operations:
+      - method: POST
+        name: postqueryorupdate
+        description: SPARQL query or update
+        call: eclipse-rdf4j.postqueryorupdate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}
+      name: createrepository
+      operations:
+      - method: PUT
+        name: createrepository
+        description: Create or configure repository
+        call: eclipse-rdf4j.createrepository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}
+      name: deleterepository
+      operations:
+      - method: DELETE
+        name: deleterepository
+        description: Delete repository
+        call: eclipse-rdf4j.deleterepository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/statements
+      name: getstatements
+      operations:
+      - method: GET
+        name: getstatements
+        description: Get statements
+        call: eclipse-rdf4j.getstatements
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/statements
+      name: addstatements
+      operations:
+      - method: POST
+        name: addstatements
+        description: Add or update statements
+        call: eclipse-rdf4j.addstatements
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/statements
+      name: replacestatements
+      operations:
+      - method: PUT
+        name: replacestatements
+        description: Replace statements
+        call: eclipse-rdf4j.replacestatements
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/statements
+      name: removestatements
+      operations:
+      - method: DELETE
+        name: removestatements
+        description: Remove statements
+        call: eclipse-rdf4j.removestatements
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/size
+      name: getrepositorysize
+      operations:
+      - method: GET
+        name: getrepositorysize
+        description: Get repository size
+        call: eclipse-rdf4j.getrepositorysize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/contexts
+      name: listcontexts
+      operations:
+      - method: GET
+        name: listcontexts
+        description: List contexts
+        call: eclipse-rdf4j.listcontexts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/namespaces
+      name: listnamespaces
+      operations:
+      - method: GET
+        name: listnamespaces
+        description: List namespaces
+        call: eclipse-rdf4j.listnamespaces
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/namespaces
+      name: clearnamespaces
+      operations:
+      - method: DELETE
+        name: clearnamespaces
+        description: Clear namespaces
+        call: eclipse-rdf4j.clearnamespaces
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/namespaces/{prefix}
+      name: getnamespace
+      operations:
+      - method: GET
+        name: getnamespace
+        description: Get namespace
+        call: eclipse-rdf4j.getnamespace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/namespaces/{prefix}
+      name: setnamespace
+      operations:
+      - method: PUT
+        name: setnamespace
+        description: Set namespace
+        call: eclipse-rdf4j.setnamespace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/namespaces/{prefix}
+      name: deletenamespace
+      operations:
+      - method: DELETE
+        name: deletenamespace
+        description: Delete namespace
+        call: eclipse-rdf4j.deletenamespace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/transactions
+      name: begintransaction
+      operations:
+      - method: POST
+        name: begintransaction
+        description: Begin transaction
+        call: eclipse-rdf4j.begintransaction
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/transactions/{transactionID}
+      name: executetransactionaction
+      operations:
+      - method: PUT
+        name: executetransactionaction
+        description: Execute transaction action
+        call: eclipse-rdf4j.executetransactionaction
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /repositories/{repositoryID}/transactions/{transactionID}
+      name: rollbacktransaction
+      operations:
+      - method: DELETE
+        name: rollbacktransaction
+        description: Rollback transaction
+        call: eclipse-rdf4j.rollbacktransaction
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: eclipse-rdf4j-mcp
+    transport: http
+    description: MCP adapter for RDF4J Server REST API for AI agent use.
+    tools:
+    - name: getprotocolversion
+      description: Get protocol version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.getprotocolversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listrepositories
+      description: List repositories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.listrepositories
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: queryrepository
+      description: Query repository (SPARQL)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.queryrepository
+      with:
+        query: tools.query
+        queryLn: tools.queryLn
+        infer: tools.infer
+        default-graph-uri: tools.default-graph-uri
+        named-graph-uri: tools.named-graph-uri
+      inputParameters:
+      - name: query
+        type: string
+        description: SPARQL query string.
+        required: true
+      - name: queryLn
+        type: string
+        description: queryLn
+      - name: infer
+        type: boolean
+        description: infer
+      - name: default-graph-uri
+        type: array
+        description: default-graph-uri
+      - name: named-graph-uri
+        type: array
+        description: named-graph-uri
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postqueryorupdate
+      description: SPARQL query or update
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eclipse-rdf4j.postqueryorupdate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createrepository
+      description: Create or configure repository
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.createrepository
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleterepository
+      description: Delete repository
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eclipse-rdf4j.deleterepository
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getstatements
+      description: Get statements
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.getstatements
+      with:
+        subj: tools.subj
+        pred: tools.pred
+        obj: tools.obj
+        context: tools.context
+        infer: tools.infer
+      inputParameters:
+      - name: subj
+        type: string
+        description: subj
+      - name: pred
+        type: string
+        description: pred
+      - name: obj
+        type: string
+        description: obj
+      - name: context
+        type: array
+        description: context
+      - name: infer
+        type: boolean
+        description: infer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: addstatements
+      description: Add or update statements
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eclipse-rdf4j.addstatements
+      with:
+        context: tools.context
+      inputParameters:
+      - name: context
+        type: array
+        description: context
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replacestatements
+      description: Replace statements
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.replacestatements
+      with:
+        context: tools.context
+      inputParameters:
+      - name: context
+        type: array
+        description: context
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removestatements
+      description: Remove statements
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eclipse-rdf4j.removestatements
+      with:
+        subj: tools.subj
+        pred: tools.pred
+        obj: tools.obj
+        context: tools.context
+      inputParameters:
+      - name: subj
+        type: string
+        description: subj
+      - name: pred
+        type: string
+        description: pred
+      - name: obj
+        type: string
+        description: obj
+      - name: context
+        type: array
+        description: context
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getrepositorysize
+      description: Get repository size
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.getrepositorysize
+      with:
+        context: tools.context
+      inputParameters:
+      - name: context
+        type: array
+        description: context
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcontexts
+      description: List contexts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.listcontexts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listnamespaces
+      description: List namespaces
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.listnamespaces
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: clearnamespaces
+      description: Clear namespaces
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eclipse-rdf4j.clearnamespaces
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getnamespace
+      description: Get namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.getnamespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: setnamespace
+      description: Set namespace
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.setnamespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletenamespace
+      description: Delete namespace
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eclipse-rdf4j.deletenamespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: begintransaction
+      description: Begin transaction
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eclipse-rdf4j.begintransaction
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: executetransactionaction
+      description: Execute transaction action
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: eclipse-rdf4j.executetransactionaction
+      with:
+        action: tools.action
+      inputParameters:
+      - name: action
+        type: string
+        description: action
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rollbacktransaction
+      description: Rollback transaction
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eclipse-rdf4j.rollbacktransaction
+      outputParameters:
+      - type: object
+        mapping: $.
