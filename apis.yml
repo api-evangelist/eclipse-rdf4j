@@ -48,19 +48,19 @@ apis:
       - type: Repository
         url: https://github.com/eclipse/rdf4j
 common:
-  - type: Getting Started
+  - type: GettingStarted
     url: https://rdf4j.org/documentation/programming/getting-started/
   - type: Documentation
     url: https://rdf4j.org/documentation/
   - type: Tutorials
     url: https://rdf4j.org/documentation/tutorials/
-  - type: Change Log
+  - type: ChangeLog
     url: https://rdf4j.org/release-notes/
   - type: Issues
     url: https://github.com/eclipse/rdf4j/issues
   - type: Support
     url: https://github.com/eclipse/rdf4j/discussions
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/eclipse/rdf4j
   - type: License
     url: https://github.com/eclipse/rdf4j/blob/main/LICENSE.md
