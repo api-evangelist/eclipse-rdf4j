@@ -1,0 +1,67 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RDF4J Server REST API — Contexts
+  description: 'RDF4J Server REST API — Contexts. 1 operations. Lead operation: List contexts. Self-contained Naftiko capability
+    covering one Eclipse Rdf4j business surface.'
+  tags:
+  - Eclipse Rdf4j
+  - Contexts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ECLIPSE_RDF4J_API_KEY: ECLIPSE_RDF4J_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rdf4j-server-rest-contexts
+    baseUri: http://localhost:8080/rdf4j-server
+    description: RDF4J Server REST API — Contexts business capability. Self-contained, no shared references.
+    resources:
+    - name: repositories-repositoryID-contexts
+      path: /repositories/{repositoryID}/contexts
+      operations:
+      - name: listcontexts
+        method: GET
+        description: List contexts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: rdf4j-server-rest-contexts-rest
+    port: 8080
+    description: REST adapter for RDF4J Server REST API — Contexts. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/repositories/{repositoryid}/contexts
+      name: repositories-repositoryid-contexts
+      description: REST surface for repositories-repositoryID-contexts.
+      operations:
+      - method: GET
+        name: listcontexts
+        description: List contexts
+        call: rdf4j-server-rest-contexts.listcontexts
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rdf4j-server-rest-contexts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RDF4J Server REST API — Contexts. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-contexts
+      description: List contexts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rdf4j-server-rest-contexts.listcontexts
+      outputParameters:
+      - type: object
+        mapping: $.

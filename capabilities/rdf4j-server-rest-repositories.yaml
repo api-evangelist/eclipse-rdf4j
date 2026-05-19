@@ -1,0 +1,224 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RDF4J Server REST API — Repositories
+  description: 'RDF4J Server REST API — Repositories. 5 operations. Lead operation: List repositories. Self-contained Naftiko
+    capability covering one Eclipse Rdf4j business surface.'
+  tags:
+  - Eclipse Rdf4j
+  - Repositories
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ECLIPSE_RDF4J_API_KEY: ECLIPSE_RDF4J_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rdf4j-server-rest-repositories
+    baseUri: http://localhost:8080/rdf4j-server
+    description: RDF4J Server REST API — Repositories business capability. Self-contained, no shared references.
+    resources:
+    - name: repositories
+      path: /repositories
+      operations:
+      - name: listrepositories
+        method: GET
+        description: List repositories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: repositories-repositoryID
+      path: /repositories/{repositoryID}
+      operations:
+      - name: queryrepository
+        method: GET
+        description: Query repository (SPARQL)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: SPARQL query string.
+          required: true
+        - name: queryLn
+          in: query
+          type: string
+        - name: infer
+          in: query
+          type: boolean
+        - name: default-graph-uri
+          in: query
+          type: array
+        - name: named-graph-uri
+          in: query
+          type: array
+      - name: postqueryorupdate
+        method: POST
+        description: SPARQL query or update
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: createrepository
+        method: PUT
+        description: Create or configure repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleterepository
+        method: DELETE
+        description: Delete repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: rdf4j-server-rest-repositories-rest
+    port: 8080
+    description: REST adapter for RDF4J Server REST API — Repositories. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/repositories
+      name: repositories
+      description: REST surface for repositories.
+      operations:
+      - method: GET
+        name: listrepositories
+        description: List repositories
+        call: rdf4j-server-rest-repositories.listrepositories
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/repositories/{repositoryid}
+      name: repositories-repositoryid
+      description: REST surface for repositories-repositoryID.
+      operations:
+      - method: GET
+        name: queryrepository
+        description: Query repository (SPARQL)
+        call: rdf4j-server-rest-repositories.queryrepository
+        with:
+          query: rest.query
+          queryLn: rest.queryLn
+          infer: rest.infer
+          default-graph-uri: rest.default-graph-uri
+          named-graph-uri: rest.named-graph-uri
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postqueryorupdate
+        description: SPARQL query or update
+        call: rdf4j-server-rest-repositories.postqueryorupdate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: createrepository
+        description: Create or configure repository
+        call: rdf4j-server-rest-repositories.createrepository
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterepository
+        description: Delete repository
+        call: rdf4j-server-rest-repositories.deleterepository
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rdf4j-server-rest-repositories-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RDF4J Server REST API — Repositories. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-repositories
+      description: List repositories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rdf4j-server-rest-repositories.listrepositories
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: query-repository-sparql
+      description: Query repository (SPARQL)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rdf4j-server-rest-repositories.queryrepository
+      with:
+        query: tools.query
+        queryLn: tools.queryLn
+        infer: tools.infer
+        default-graph-uri: tools.default-graph-uri
+        named-graph-uri: tools.named-graph-uri
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: sparql-query-update
+      description: SPARQL query or update
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: rdf4j-server-rest-repositories.postqueryorupdate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-configure-repository
+      description: Create or configure repository
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rdf4j-server-rest-repositories.createrepository
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-repository
+      description: Delete repository
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rdf4j-server-rest-repositories.deleterepository
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,67 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RDF4J Server REST API — Protocol
+  description: 'RDF4J Server REST API — Protocol. 1 operations. Lead operation: Get protocol version. Self-contained Naftiko
+    capability covering one Eclipse Rdf4j business surface.'
+  tags:
+  - Eclipse Rdf4j
+  - Protocol
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ECLIPSE_RDF4J_API_KEY: ECLIPSE_RDF4J_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rdf4j-server-rest-protocol
+    baseUri: http://localhost:8080/rdf4j-server
+    description: RDF4J Server REST API — Protocol business capability. Self-contained, no shared references.
+    resources:
+    - name: protocol
+      path: /protocol
+      operations:
+      - name: getprotocolversion
+        method: GET
+        description: Get protocol version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: rdf4j-server-rest-protocol-rest
+    port: 8080
+    description: REST adapter for RDF4J Server REST API — Protocol. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/protocol
+      name: protocol
+      description: REST surface for protocol.
+      operations:
+      - method: GET
+        name: getprotocolversion
+        description: Get protocol version
+        call: rdf4j-server-rest-protocol.getprotocolversion
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rdf4j-server-rest-protocol-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RDF4J Server REST API — Protocol. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-protocol-version
+      description: Get protocol version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rdf4j-server-rest-protocol.getprotocolversion
+      outputParameters:
+      - type: object
+        mapping: $.
