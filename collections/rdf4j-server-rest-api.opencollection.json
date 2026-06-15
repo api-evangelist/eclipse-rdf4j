@@ -1,0 +1,579 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Protocol",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get protocol version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/protocol"
+          },
+          "docs": "Returns the protocol version supported by the RDF4J Server."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories"
+          },
+          "docs": "Returns a list of all repositories available on the server."
+        },
+        {
+          "info": {
+            "name": "Query repository (SPARQL)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "SPARQL query string."
+              },
+              {
+                "name": "queryLn",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "infer",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "default-graph-uri",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "named-graph-uri",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Execute a SPARQL query (SELECT, ASK, CONSTRUCT, DESCRIBE) against the repository. The query may be passed via the `query` query parameter."
+        },
+        {
+          "info": {
+            "name": "SPARQL query or update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "query",
+                  "value": ""
+                },
+                {
+                  "name": "update",
+                  "value": ""
+                },
+                {
+                  "name": "queryLn",
+                  "value": ""
+                },
+                {
+                  "name": "infer",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Execute a SPARQL query or SPARQL Update via POST. Use form parameters `query` or `update`, or send the SPARQL query/update as the request body with the appropriate `Content-Type`."
+        },
+        {
+          "info": {
+            "name": "Create or configure repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Create or replace the repository configuration for the specified ID. Body contains an RDF representation of the repository configuration."
+        },
+        {
+          "info": {
+            "name": "Delete repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Delete the repository and all of its data."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "subj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pred",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "obj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "infer",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve RDF statements matching an optional triple pattern (subj, pred, obj, context)."
+        },
+        {
+          "info": {
+            "name": "Add or update statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "update",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add RDF data to the repository, or apply a SPARQL Update via the form parameter `update`."
+        },
+        {
+          "info": {
+            "name": "Replace statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Clear the repository (or specified context) and replace its content with the supplied RDF data."
+        },
+        {
+          "info": {
+            "name": "Remove statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "subj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pred",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "obj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Remove statements matching the optional triple pattern."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Size",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get repository size",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/size",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the number of (explicit) statements in the repository or context."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Contexts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contexts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/contexts",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "List all named graph (context) IRIs in the repository."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Namespaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "List all namespace prefix declarations in the repository."
+        },
+        {
+          "info": {
+            "name": "Clear namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Remove all namespace prefix declarations from the repository."
+        },
+        {
+          "info": {
+            "name": "Get namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Get the namespace IRI for a given prefix."
+        },
+        {
+          "info": {
+            "name": "Set namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Set the namespace IRI for the given prefix."
+        },
+        {
+          "info": {
+            "name": "Delete namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Remove the namespace declaration for the given prefix."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Begin transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Start a new transaction. The `Location` header of the response holds the transaction URL."
+        },
+        {
+          "info": {
+            "name": "Execute transaction action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions/:transactionID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "transactionID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Perform an action within the transaction. The action is selected via the `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`, `CLEAR`, `COMMIT`, `PING`)."
+        },
+        {
+          "info": {
+            "name": "Rollback transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions/:transactionID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "transactionID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Abort the transaction and discard all changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2748 @@
+{
+  "item": [
+    {
+      "id": "62b3c857-a87e-4e2f-ad63-bc44ecc9bccc",
+      "name": "Protocol",
+      "description": {
+        "content": "Protocol version of the server.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b99e9b30-fecc-40b9-a69b-2df6f3cdb7f4",
+          "name": "Get protocol version",
+          "request": {
+            "name": "Get protocol version",
+            "description": {
+              "content": "Returns the protocol version supported by the RDF4J Server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ecf6db8-34ba-4896-9c81-478f3ec2f92a",
+              "name": "Protocol version as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "12",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "86ebf460-823b-497b-a413-5a54924c03fb",
+      "name": "Repositories",
+      "description": {
+        "content": "Manage and inspect RDF repositories.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "acc256da-7888-4e23-b136-e829ac73eef0",
+          "name": "List repositories",
+          "request": {
+            "name": "List repositories",
+            "description": {
+              "content": "Returns a list of all repositories available on the server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "828ccf92-8c20-4681-b652-960e91270f31",
+              "name": "SPARQL results with one row per repository.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{\n  \"head\": {\n    \"vars\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"results\": {\n    \"bindings\": [\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      },\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51d6e8a5-4b2e-4ff8-8c19-4a7f7e4b474a",
+          "name": "Query repository (SPARQL)",
+          "request": {
+            "name": "Query repository (SPARQL)",
+            "description": {
+              "content": "Execute a SPARQL query (SELECT, ASK, CONSTRUCT, DESCRIBE) against the repository. The query may be passed via the `query` query parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) SPARQL query string."
+                },
+                {
+                  "disabled": false,
+                  "key": "queryLn",
+                  "value": "sparql"
+                },
+                {
+                  "disabled": false,
+                  "key": "infer",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "default-graph-uri",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "default-graph-uri",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "named-graph-uri",
+                  "value": "<uri>"
+                },
+                {
+                  "disabled": false,
+                  "key": "named-graph-uri",
+                  "value": "<uri>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9aacfd34-e3cf-453b-9a62-551299ff77de",
+              "name": "Query result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "key": "infer",
+                      "value": "true"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{\n  \"head\": {\n    \"vars\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"results\": {\n    \"bindings\": [\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      },\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b5ce815-9f1b-40de-ae07-0077fa9761b5",
+              "name": "Malformed query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "key": "infer",
+                      "value": "true"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "84800907-b42c-454e-912d-1df21d298175",
+              "name": "Repository not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "key": "infer",
+                      "value": "true"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "default-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "named-graph-uri",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2de4e63-cbf6-451e-8fdd-036a6dc98b7d",
+          "name": "SPARQL query or update",
+          "request": {
+            "name": "SPARQL query or update",
+            "description": {
+              "content": "Execute a SPARQL query or SPARQL Update via POST. Use form parameters `query` or `update`, or send the SPARQL query/update as the request body with the appropriate `Content-Type`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "update",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "queryLn",
+                  "value": "sparql"
+                },
+                {
+                  "disabled": false,
+                  "key": "infer",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6b3153da-804e-40f8-9e7f-43e0c9c39f54",
+              "name": "Query or update result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "299bb706-b010-4cd2-8f91-1c8e48b2a16b",
+              "name": "Update applied successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6e21dc7-9554-405f-b60a-a28d2a6a53fc",
+              "name": "Malformed query or update.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9825085-32e8-411b-85d1-ed5be71238ce",
+              "name": "Repository not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "queryLn",
+                      "value": "sparql"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "311d79d6-222b-4596-a3be-f083dc787ab5",
+          "name": "Create or configure repository",
+          "request": {
+            "name": "Create or configure repository",
+            "description": {
+              "content": "Create or replace the repository configuration for the specified ID. Body contains an RDF representation of the repository configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-turtle"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "0ed7bfbd-8724-4a14-a302-3604bf0f31f7",
+              "name": "Repository created or updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e4907cbd-af6d-40dc-9257-17eb2cad91ce",
+              "name": "Malformed configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7da42e50-cd39-4269-a242-4bbd86dbf027",
+          "name": "Delete repository",
+          "request": {
+            "name": "Delete repository",
+            "description": {
+              "content": "Delete the repository and all of its data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a82ee39-59f3-45c0-8c51-173f67409610",
+              "name": "Repository deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "33b5e352-931c-483a-8fb1-b41a49066c03",
+              "name": "Repository not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6a7c7020-b386-479c-b1ab-0680741360d0",
+      "name": "Statements",
+      "description": {
+        "content": "Read and modify the RDF statements in a repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9bf3f1e-15f4-405b-9fc3-b07ddc734fe1",
+          "name": "Get statements",
+          "request": {
+            "name": "Get statements",
+            "description": {
+              "content": "Retrieve RDF statements matching an optional triple pattern (subj, pred, obj, context).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pred",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "obj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "infer",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/rdf+xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7a4b592-9f6d-4220-9fc9-4c540647751a",
+              "name": "Matching RDF statements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pred",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "obj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/rdf+xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/rdf+xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "468d19a7-8758-4c85-9d88-17cd4f39c743",
+          "name": "Add or update statements",
+          "request": {
+            "name": "Add or update statements",
+            "description": {
+              "content": "Add RDF data to the repository, or apply a SPARQL Update via the form parameter `update`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "update",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f7df0d7a-d5be-4dab-9031-6bccaf7e9623",
+              "name": "Statements added or update applied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0eb9e4c4-79c8-43c0-b7e4-1030de7ea308",
+              "name": "Malformed RDF or update.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "135235ea-9402-4415-b004-bacc81668694",
+          "name": "Replace statements",
+          "request": {
+            "name": "Replace statements",
+            "description": {
+              "content": "Clear the repository (or specified context) and replace its content with the supplied RDF data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/rdf+xml"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0df143ed-c344-47cf-a8cd-1baad05264e8",
+              "name": "Statements replaced.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3d3d6d2-5439-4fab-9bcc-38799eb245de",
+          "name": "Remove statements",
+          "request": {
+            "name": "Remove statements",
+            "description": {
+              "content": "Remove statements matching the optional triple pattern.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pred",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "obj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9d7aafc-a35f-4308-8563-83b91ebc500b",
+              "name": "Statements removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pred",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "obj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "03211872-cbfd-4cd5-acf5-f69534dee726",
+      "name": "Namespaces",
+      "description": {
+        "content": "Manage namespace prefix declarations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "73b04053-0206-4c64-925f-f02c7b97a94e",
+          "name": "List namespaces",
+          "request": {
+            "name": "List namespaces",
+            "description": {
+              "content": "List all namespace prefix declarations in the repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "namespaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30986465-204c-48f8-9295-083f0a5738ea",
+              "name": "SPARQL results with prefix and namespace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{\n  \"head\": {\n    \"vars\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"results\": {\n    \"bindings\": [\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      },\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4647053-4fd8-4f90-9043-6fa845cc3819",
+          "name": "Clear namespaces",
+          "request": {
+            "name": "Clear namespaces",
+            "description": {
+              "content": "Remove all namespace prefix declarations from the repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "namespaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab3fc4a3-6682-4e0c-80bd-d3e0d14b6890",
+              "name": "Namespaces cleared.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec447a68-f58b-439a-8b8e-16b1be838a7a",
+          "name": "Get namespace",
+          "request": {
+            "name": "Get namespace",
+            "description": {
+              "content": "Get the namespace IRI for a given prefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "namespaces",
+                ":prefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "prefix",
+                  "description": "(Required) The namespace prefix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "35a6828f-0493-4b99-8e8e-be9e92c41db7",
+              "name": "Namespace IRI as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces",
+                    ":prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prefix",
+                      "description": "(Required) The namespace prefix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c77bec31-04fd-43f9-9f16-d25f6e319eea",
+              "name": "Prefix not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces",
+                    ":prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prefix",
+                      "description": "(Required) The namespace prefix."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "681087ee-0036-4296-9edf-f6c228bed235",
+          "name": "Set namespace",
+          "request": {
+            "name": "Set namespace",
+            "description": {
+              "content": "Set the namespace IRI for the given prefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "namespaces",
+                ":prefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "prefix",
+                  "description": "(Required) The namespace prefix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "9199d003-026e-4c60-bcc1-c44be025a3a3",
+              "name": "Namespace set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces",
+                    ":prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prefix",
+                      "description": "(Required) The namespace prefix."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa8f2534-5d21-4df7-b7e6-e056e213ea22",
+          "name": "Delete namespace",
+          "request": {
+            "name": "Delete namespace",
+            "description": {
+              "content": "Remove the namespace declaration for the given prefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "namespaces",
+                ":prefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "prefix",
+                  "description": "(Required) The namespace prefix."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e3d0709-2326-42fa-b62b-87a8d913c81b",
+              "name": "Namespace removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "namespaces",
+                    ":prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prefix",
+                      "description": "(Required) The namespace prefix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "51087860-2daa-474f-bbab-59ef5664c747",
+      "name": "Contexts",
+      "description": {
+        "content": "Inspect named graphs (contexts) in a repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14b68f29-c1d1-4229-8bd9-a4e5f2f4acd6",
+          "name": "List contexts",
+          "request": {
+            "name": "List contexts",
+            "description": {
+              "content": "List all named graph (context) IRIs in the repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "contexts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab2b0e32-fe1c-4ee4-a260-783b02cc85ef",
+              "name": "SPARQL results listing context IRIs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "contexts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{\n  \"head\": {\n    \"vars\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"results\": {\n    \"bindings\": [\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_2\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      },\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "822ed0a9-e5a8-47c4-b6d2-f3cd3bc2527d",
+      "name": "Size",
+      "description": {
+        "content": "Get the number of statements in a repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0ef029f9-1d21-4ddf-8532-4710dccdd878",
+          "name": "Get repository size",
+          "request": {
+            "name": "Get repository size",
+            "description": {
+              "content": "Returns the number of (explicit) statements in the repository or context.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "size"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "371cb27e-1b19-47f3-8c5a-0a7176481a95",
+              "name": "Statement count as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "size"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "94ddc017-61cd-4354-abb9-8d02800f7abd",
+      "name": "Transactions",
+      "description": {
+        "content": "Group multiple operations in an atomic transaction.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c37dfe4-bfe6-4b66-838d-22d4b86a9e58",
+          "name": "Begin transaction",
+          "request": {
+            "name": "Begin transaction",
+            "description": {
+              "content": "Start a new transaction. The `Location` header of the response holds the transaction URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95ea9b21-93bc-4b07-a553-f1765d846e4c",
+              "name": "Transaction started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of the new transaction resource.",
+                  "key": "Location",
+                  "value": "https://Fi.azE4NzA2k3ql,CiXOdpAqPxA-ZfYIAazF7B7UZc.kaqxmOc0Xl1xCGJp2lNB1tu"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91cff36b-2653-4a71-bea6-de7d88a45916",
+          "name": "Execute transaction action",
+          "request": {
+            "name": "Execute transaction action",
+            "description": {
+              "content": "Perform an action within the transaction. The action is selected via the `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`, `CLEAR`, `COMMIT`, `PING`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "transactions",
+                ":transactionID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/rdf+xml"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10904d0a-9b1a-4ae2-a9d0-820d678931b5",
+              "name": "Action executed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "transactions",
+                    ":transactionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cbe750f0-6b8c-4489-8ab3-71985fd8e7b2",
+              "name": "Action executed (no content).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "transactions",
+                    ":transactionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b929a994-6e9c-49cf-8608-546cd9bf9885",
+          "name": "Rollback transaction",
+          "request": {
+            "name": "Rollback transaction",
+            "description": {
+              "content": "Abort the transaction and discard all changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "transactions",
+                ":transactionID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72c121f9-c749-46c8-b18d-a28ecdbb2651",
+              "name": "Transaction rolled back.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "transactions",
+                    ":transactionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/rdf4j-server",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b9512700-2d4b-47ae-92a7-f85d6b37f2b4",
+    "name": "RDF4J Server REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.\n\nContact Support:\n Name: Eclipse RDF4J\n Email: rdf4j-dev@eclipse.org",
+      "type": "text/plain"
+    }
+  }
+}
