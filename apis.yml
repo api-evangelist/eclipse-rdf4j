@@ -6,7 +6,7 @@ description: >-
   Server) and a web-based Workbench. The framework offers an easy-to-use Java API and SPARQL 1.1 support, and integrates
   with leading RDF database solutions.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/refs/heads/main/apis.yml
 tags:
   - Eclipse Foundation
