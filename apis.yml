@@ -45,6 +45,8 @@ apis:
       - type: Repository
         url: https://github.com/eclipse/rdf4j
 common:
+  - type: DomainSecurity
+    url: security/eclipse-rdf4j-domain-security.yml
   - type: GettingStarted
     url: https://rdf4j.org/documentation/programming/getting-started/
   - type: Documentation
@@ -61,6 +63,8 @@ common:
     url: https://github.com/eclipse/rdf4j
   - type: License
     url: https://github.com/eclipse/rdf4j/blob/main/LICENSE.md
+  - type: Blog
+    url: https://rdf4j.org/index.xml
 maintainers:
   - FN: Eclipse Foundation
     email: rdf4j-dev@eclipse.org
