@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts Repositories API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Repositories
+  description: Manage and inspect RDF repositories.
+paths:
+  /repositories:
+    get:
+      tags:
+      - Repositories
+      summary: List repositories
+      description: Returns a list of all repositories available on the server.
+      operationId: listRepositories
+      responses:
+        '200':
+          description: SPARQL results with one row per repository.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+            application/sparql-results+xml:
+              schema:
+                type: string
+  /repositories/{repositoryID}:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags:
+      - Repositories
+      summary: Query repository (SPARQL)
+      description: Execute a SPARQL query (SELECT, ASK, CONSTRUCT, DESCRIBE) against the repository. The query may be passed via the `query` query parameter.
+      operationId: queryRepository
+      parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+        description: SPARQL query string.
+      - name: queryLn
+        in: query
+        required: false
+        schema:
+          type: string
+          default: sparql
+      - name: infer
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - name: default-graph-uri
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: uri
+      - name: named-graph-uri
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Query result.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+            application/rdf+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+        '400':
+          description: Malformed query.
+        '404':
+          description: Repository not found.
+    post:
+      tags:
+      - Repositories
+      summary: SPARQL query or update
+      description: Execute a SPARQL query or SPARQL Update via POST. Use form parameters `query` or `update`, or send the SPARQL query/update as the request body with the appropriate `Content-Type`.
+      operationId: postQueryOrUpdate
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+                queryLn:
+                  type: string
+                  default: sparql
+                infer:
+                  type: boolean
+                  default: true
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Query or update result.
+        '204':
+          description: Update applied successfully.
+        '400':
+          description: Malformed query or update.
+        '404':
+          description: Repository not found.
+    put:
+      tags:
+      - Repositories
+      summary: Create or configure repository
+      description: Create or replace the repository configuration for the specified ID. Body contains an RDF representation of the repository configuration.
+      operationId: createRepository
+      requestBody:
+        required: true
+        content:
+          application/x-turtle:
+            schema:
+              type: string
+          application/rdf+xml:
+            schema:
+              type: string
+      responses:
+        '204':
+          description: Repository created or updated.
+        '400':
+          description: Malformed configuration.
+    delete:
+      tags:
+      - Repositories
+      summary: Delete repository
+      description: Delete the repository and all of its data.
+      operationId: deleteRepository
+      responses:
+        '204':
+          description: Repository deleted.
+        '404':
+          description: Repository not found.
+components:
+  schemas:
+    SparqlResults:
+      type: object
+      description: SPARQL 1.1 Query Results JSON Format.
+      properties:
+        head:
+          type: object
+          properties:
+            vars:
+              type: array
+              items:
+                type: string
+        results:
+          type: object
+          properties:
+            bindings:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    value:
+                      type: string
+                    xml:lang:
+                      type: string
+                    datatype:
+                      type: string
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/

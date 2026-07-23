@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Contexts
+  description: Inspect named graphs (contexts) in a repository.
+paths:
+  /repositories/{repositoryID}/contexts:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags:
+      - Contexts
+      summary: List contexts
+      description: List all named graph (context) IRIs in the repository.
+      operationId: listContexts
+      responses:
+        '200':
+          description: SPARQL results listing context IRIs.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+components:
+  schemas:
+    SparqlResults:
+      type: object
+      description: SPARQL 1.1 Query Results JSON Format.
+      properties:
+        head:
+          type: object
+          properties:
+            vars:
+              type: array
+              items:
+                type: string
+        results:
+          type: object
+          properties:
+            bindings:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    value:
+                      type: string
+                    xml:lang:
+                      type: string
+                    datatype:
+                      type: string
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/

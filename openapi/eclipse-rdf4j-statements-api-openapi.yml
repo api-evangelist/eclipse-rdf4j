@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts Statements API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Statements
+  description: Read and modify the RDF statements in a repository.
+paths:
+  /repositories/{repositoryID}/statements:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags:
+      - Statements
+      summary: Get statements
+      description: Retrieve RDF statements matching an optional triple pattern (subj, pred, obj, context).
+      operationId: getStatements
+      parameters:
+      - name: subj
+        in: query
+        schema:
+          type: string
+      - name: pred
+        in: query
+        schema:
+          type: string
+      - name: obj
+        in: query
+        schema:
+          type: string
+      - name: context
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: infer
+        in: query
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: Matching RDF statements.
+          content:
+            application/rdf+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+    post:
+      tags:
+      - Statements
+      summary: Add or update statements
+      description: Add RDF data to the repository, or apply a SPARQL Update via the form parameter `update`.
+      operationId: addStatements
+      parameters:
+      - name: context
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/rdf+xml:
+            schema:
+              type: string
+          text/turtle:
+            schema:
+              type: string
+          application/n-triples:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                update:
+                  type: string
+      responses:
+        '204':
+          description: Statements added or update applied.
+        '400':
+          description: Malformed RDF or update.
+    put:
+      tags:
+      - Statements
+      summary: Replace statements
+      description: Clear the repository (or specified context) and replace its content with the supplied RDF data.
+      operationId: replaceStatements
+      parameters:
+      - name: context
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/rdf+xml:
+            schema:
+              type: string
+          text/turtle:
+            schema:
+              type: string
+      responses:
+        '204':
+          description: Statements replaced.
+    delete:
+      tags:
+      - Statements
+      summary: Remove statements
+      description: Remove statements matching the optional triple pattern.
+      operationId: removeStatements
+      parameters:
+      - name: subj
+        in: query
+        schema:
+          type: string
+      - name: pred
+        in: query
+        schema:
+          type: string
+      - name: obj
+        in: query
+        schema:
+          type: string
+      - name: context
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '204':
+          description: Statements removed.
+components:
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/

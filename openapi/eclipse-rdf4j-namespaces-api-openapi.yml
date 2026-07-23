@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts Namespaces API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Namespaces
+  description: Manage namespace prefix declarations.
+paths:
+  /repositories/{repositoryID}/namespaces:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    get:
+      tags:
+      - Namespaces
+      summary: List namespaces
+      description: List all namespace prefix declarations in the repository.
+      operationId: listNamespaces
+      responses:
+        '200':
+          description: SPARQL results with prefix and namespace.
+          content:
+            application/sparql-results+json:
+              schema:
+                $ref: '#/components/schemas/SparqlResults'
+    delete:
+      tags:
+      - Namespaces
+      summary: Clear namespaces
+      description: Remove all namespace prefix declarations from the repository.
+      operationId: clearNamespaces
+      responses:
+        '204':
+          description: Namespaces cleared.
+  /repositories/{repositoryID}/namespaces/{prefix}:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    - name: prefix
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The namespace prefix.
+    get:
+      tags:
+      - Namespaces
+      summary: Get namespace
+      description: Get the namespace IRI for a given prefix.
+      operationId: getNamespace
+      responses:
+        '200':
+          description: Namespace IRI as plain text.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Prefix not found.
+    put:
+      tags:
+      - Namespaces
+      summary: Set namespace
+      description: Set the namespace IRI for the given prefix.
+      operationId: setNamespace
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '204':
+          description: Namespace set.
+    delete:
+      tags:
+      - Namespaces
+      summary: Delete namespace
+      description: Remove the namespace declaration for the given prefix.
+      operationId: deleteNamespace
+      responses:
+        '204':
+          description: Namespace removed.
+components:
+  schemas:
+    SparqlResults:
+      type: object
+      description: SPARQL 1.1 Query Results JSON Format.
+      properties:
+        head:
+          type: object
+          properties:
+            vars:
+              type: array
+              items:
+                type: string
+        results:
+          type: object
+          properties:
+            bindings:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    value:
+                      type: string
+                    xml:lang:
+                      type: string
+                    datatype:
+                      type: string
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/

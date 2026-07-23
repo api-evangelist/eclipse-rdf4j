@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts Protocol API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Protocol
+  description: Protocol version of the server.
+paths:
+  /protocol:
+    get:
+      tags:
+      - Protocol
+      summary: Get protocol version
+      description: Returns the protocol version supported by the RDF4J Server.
+      operationId: getProtocolVersion
+      responses:
+        '200':
+          description: Protocol version as plain text.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '12'
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/

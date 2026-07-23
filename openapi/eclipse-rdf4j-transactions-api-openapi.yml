@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: RDF4J Server REST Contexts Transactions API
+  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
+  version: '5.0'
+  contact:
+    name: Eclipse RDF4J
+    url: https://rdf4j.org/
+    email: rdf4j-dev@eclipse.org
+  license:
+    name: Eclipse Distribution License v1.0
+    url: https://www.eclipse.org/org/documents/edl-v10.php
+servers:
+- url: http://localhost:8080/rdf4j-server
+  description: Default local RDF4J Server installation
+tags:
+- name: Transactions
+  description: Group multiple operations in an atomic transaction.
+paths:
+  /repositories/{repositoryID}/transactions:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    post:
+      tags:
+      - Transactions
+      summary: Begin transaction
+      description: Start a new transaction. The `Location` header of the response holds the transaction URL.
+      operationId: beginTransaction
+      responses:
+        '201':
+          description: Transaction started.
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: URL of the new transaction resource.
+  /repositories/{repositoryID}/transactions/{transactionID}:
+    parameters:
+    - $ref: '#/components/parameters/RepositoryID'
+    - name: transactionID
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      tags:
+      - Transactions
+      summary: Execute transaction action
+      description: Perform an action within the transaction. The action is selected via the `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`, `CLEAR`, `COMMIT`, `PING`).
+      operationId: executeTransactionAction
+      parameters:
+      - name: action
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - ADD
+          - DELETE
+          - UPDATE
+          - GET
+          - SIZE
+          - CLEAR
+          - COMMIT
+          - PING
+      requestBody:
+        required: false
+        content:
+          application/rdf+xml:
+            schema:
+              type: string
+          text/turtle:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Action executed.
+        '204':
+          description: Action executed (no content).
+    delete:
+      tags:
+      - Transactions
+      summary: Rollback transaction
+      description: Abort the transaction and discard all changes.
+      operationId: rollbackTransaction
+      responses:
+        '204':
+          description: Transaction rolled back.
+components:
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
+externalDocs:
+  description: RDF4J Server REST API documentation
+  url: https://rdf4j.org/documentation/reference/rest-api/
