@@ -6,7 +6,19 @@ description: >-
   Server) and a web-based Workbench. The framework offers an easy-to-use Java API and SPARQL 1.1 support, and integrates
   with leading RDF database solutions.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/eclipse-rdf4j.png
 url: https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/refs/heads/main/apis.yml
 tags:
   - Eclipse Foundation
@@ -21,29 +33,118 @@ created: '2024-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.20'
 apis:
-  - aid: eclipse-rdf4j:rdf4j-server-rest-api
-    name: RDF4J Server REST API
-    description: >-
-      REST API exposed by the Eclipse RDF4J Server for managing repositories, executing SPARQL queries and updates,
-      working with statements, namespaces, contexts, and transactions, and importing/exporting RDF in standard
-      serialization formats.
-    humanURL: https://rdf4j.org/documentation/reference/rest-api/
-    baseURL: http://localhost:8080/rdf4j-server
-    tags:
-      - RDF
-      - Repository
-      - REST
-      - SPARQL
-      - Transactions
-    properties:
-      - type: Documentation
-        url: https://rdf4j.org/documentation/reference/rest-api/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/main/openapi/rdf4j-server-rest-api-openapi.yml
-      - type: GettingStarted
-        url: https://rdf4j.org/documentation/programming/getting-started/
-      - type: Repository
-        url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-contexts-api
+  name: Eclipse RDF4J Contexts API
+  description: Inspect named graphs (contexts) in a repository.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Contexts
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-contexts-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-namespaces-api
+  name: Eclipse RDF4J Namespaces API
+  description: Manage namespace prefix declarations.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Namespaces
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-namespaces-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-protocol-api
+  name: Eclipse RDF4J Protocol API
+  description: Protocol version of the server.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Protocol
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-protocol-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-repositories-api
+  name: Eclipse RDF4J Repositories API
+  description: Manage and inspect RDF repositories.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-repositories-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-size-api
+  name: Eclipse RDF4J Size API
+  description: Get the number of statements in a repository.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Size
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-size-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-statements-api
+  name: Eclipse RDF4J Statements API
+  description: Read and modify the RDF statements in a repository.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-statements-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-transactions-api
+  name: Eclipse RDF4J Transactions API
+  description: Group multiple operations in an atomic transaction.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
 common:
   - type: AgenticAccess
     url: agentic-access/eclipse-rdf4j-agentic-access.yml
