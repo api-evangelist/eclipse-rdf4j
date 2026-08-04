@@ -1,0 +1,26 @@
+{
+  "provider": "eclipse-rdf4j",
+  "sources": [
+    "eclipse-rdf4j-contexts-api-openapi.yml",
+    "eclipse-rdf4j-namespaces-api-openapi.yml",
+    "eclipse-rdf4j-protocol-api-openapi.yml",
+    "eclipse-rdf4j-repositories-api-openapi.yml",
+    "eclipse-rdf4j-size-api-openapi.yml",
+    "eclipse-rdf4j-statements-api-openapi.yml",
+    "eclipse-rdf4j-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "eclipse-rdf4j-contexts-api-openapi.yml",
+    "eclipse-rdf4j-namespaces-api-openapi.yml",
+    "eclipse-rdf4j-protocol-api-openapi.yml",
+    "eclipse-rdf4j-repositories-api-openapi.yml",
+    "eclipse-rdf4j-size-api-openapi.yml",
+    "eclipse-rdf4j-statements-api-openapi.yml",
+    "eclipse-rdf4j-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
