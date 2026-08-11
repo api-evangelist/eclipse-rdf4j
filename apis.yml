@@ -146,6 +146,14 @@ apis:
   - type: Repository
     url: https://github.com/eclipse/rdf4j
 common:
+  - type: Releases
+    url: https://github.com/eclipse/rdf4j/releases
+  - type: SecurityPolicy
+    url: https://github.com/eclipse-rdf4j/rdf4j/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/eclipse-rdf4j/rdf4j/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/eclipse-rdf4j/rdf4j/blob/main/CONTRIBUTING.md
   - type: AgenticAccess
     url: agentic-access/eclipse-rdf4j-agentic-access.yml
   - type: DomainSecurity
