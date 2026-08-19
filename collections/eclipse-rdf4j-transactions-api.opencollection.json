@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST Contexts Transactions API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Begin transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Start a new transaction. The `Location` header of the response holds the transaction URL."
+        },
+        {
+          "info": {
+            "name": "Execute transaction action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions/:transactionID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "transactionID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Perform an action within the transaction. The action is selected via the `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`, `CLEAR`, `COMMIT`, `PING`)."
+        },
+        {
+          "info": {
+            "name": "Rollback transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/transactions/:transactionID",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "transactionID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Abort the transaction and discard all changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

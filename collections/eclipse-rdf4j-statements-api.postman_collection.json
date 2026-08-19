@@ -1,0 +1,604 @@
+{
+  "item": [
+    {
+      "id": "f970d775-b21d-4f4b-9aa8-a74e882af8cf",
+      "name": "Statements",
+      "description": {
+        "content": "Read and modify the RDF statements in a repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bdf20354-a9f8-46d1-ae08-e654fef51f3f",
+          "name": "Get statements",
+          "request": {
+            "name": "Get statements",
+            "description": {
+              "content": "Retrieve RDF statements matching an optional triple pattern (subj, pred, obj, context).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pred",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "obj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "infer",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/rdf+xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88e0e86d-a737-4ea8-b41c-00463d2690e6",
+              "name": "Matching RDF statements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pred",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "obj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "infer",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/rdf+xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/rdf+xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0ef3966-ad97-43b7-8732-dc8173a808bc",
+          "name": "Add or update statements",
+          "request": {
+            "name": "Add or update statements",
+            "description": {
+              "content": "Add RDF data to the repository, or apply a SPARQL Update via the form parameter `update`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "update",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "77c1dd6b-2173-432c-99cc-29e86d6b563d",
+              "name": "Statements added or update applied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7173c534-f33f-4178-ab75-9327b6b6347a",
+              "name": "Malformed RDF or update.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "update",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "521a816e-d47f-4497-90b8-9000df9295d9",
+          "name": "Replace statements",
+          "request": {
+            "name": "Replace statements",
+            "description": {
+              "content": "Clear the repository (or specified context) and replace its content with the supplied RDF data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/rdf+xml"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52c01261-aa3f-4cde-a413-bce6aaa83fc5",
+              "name": "Statements replaced.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19d7f7a7-f7f9-4f05-8cd8-00f70b00abba",
+          "name": "Remove statements",
+          "request": {
+            "name": "Remove statements",
+            "description": {
+              "content": "Remove statements matching the optional triple pattern.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pred",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "obj",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b93322ef-de13-4804-a57e-783b241c12c0",
+              "name": "Statements removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pred",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "obj",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/rdf4j-server",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d66c0732-083a-4797-bdce-82cec53a9911",
+    "name": "RDF4J Server REST Contexts Statements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.\n\nContact Support:\n Name: Eclipse RDF4J\n Email: rdf4j-dev@eclipse.org",
+      "type": "text/plain"
+    }
+  }
+}

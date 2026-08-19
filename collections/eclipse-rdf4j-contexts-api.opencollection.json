@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST Contexts API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contexts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contexts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/contexts",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "List all named graph (context) IRIs in the repository."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

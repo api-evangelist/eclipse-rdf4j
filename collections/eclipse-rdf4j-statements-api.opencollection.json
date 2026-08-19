@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST Contexts Statements API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "subj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pred",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "obj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "infer",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve RDF statements matching an optional triple pattern (subj, pred, obj, context)."
+        },
+        {
+          "info": {
+            "name": "Add or update statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "update",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add RDF data to the repository, or apply a SPARQL Update via the form parameter `update`."
+        },
+        {
+          "info": {
+            "name": "Replace statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Clear the repository (or specified context) and replace its content with the supplied RDF data."
+        },
+        {
+          "info": {
+            "name": "Remove statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/statements",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "subj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pred",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "obj",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Remove statements matching the optional triple pattern."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

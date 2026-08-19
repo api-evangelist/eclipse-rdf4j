@@ -1,0 +1,122 @@
+{
+  "item": [
+    {
+      "id": "f54437bf-4469-4e8f-915f-aecc30714164",
+      "name": "Contexts",
+      "description": {
+        "content": "Inspect named graphs (contexts) in a repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "991153cd-66b5-49b6-8002-d48d744abc59",
+          "name": "List contexts",
+          "request": {
+            "name": "List contexts",
+            "description": {
+              "content": "List all named graph (context) IRIs in the repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories",
+                ":repositoryID",
+                "contexts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryID",
+                  "description": "(Required) Identifier of the repository."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a3372c4c-f030-4e4f-a065-58efee6002f0",
+              "name": "SPARQL results listing context IRIs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories",
+                    ":repositoryID",
+                    "contexts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryID",
+                      "description": "(Required) Identifier of the repository."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{\n  \"head\": {\n    \"vars\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"results\": {\n    \"bindings\": [\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      },\n      {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"value\": \"string\",\n          \"xml:lang\": \"string\",\n          \"datatype\": \"string\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/rdf4j-server",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11fe80f0-26bf-4013-8e92-7b281cc1655a",
+    "name": "RDF4J Server REST Contexts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.\n\nContact Support:\n Name: Eclipse RDF4J\n Email: rdf4j-dev@eclipse.org",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "item": [
+    {
+      "id": "e5f8a8c5-104b-4bec-b8d1-a86497c77ba0",
+      "name": "Protocol",
+      "description": {
+        "content": "Protocol version of the server.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f3f80b5-b494-42ba-8167-40938ef782f6",
+          "name": "Get protocol version",
+          "request": {
+            "name": "Get protocol version",
+            "description": {
+              "content": "Returns the protocol version supported by the RDF4J Server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0e7e548-29e2-4fce-8bb0-4d7e451c6e3e",
+              "name": "Protocol version as plain text.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "12",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/rdf4j-server",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "df222596-b3fa-47af-9b88-2798c6eca685",
+    "name": "RDF4J Server REST Contexts Protocol API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.\n\nContact Support:\n Name: Eclipse RDF4J\n Email: rdf4j-dev@eclipse.org",
+      "type": "text/plain"
+    }
+  }
+}

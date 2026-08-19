@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST Contexts Size API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Size",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get repository size",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/size",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the number of (explicit) statements in the repository or context."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

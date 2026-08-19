@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RDF4J Server REST Contexts Namespaces API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Namespaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "List all namespace prefix declarations in the repository."
+        },
+        {
+          "info": {
+            "name": "Clear namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              }
+            ]
+          },
+          "docs": "Remove all namespace prefix declarations from the repository."
+        },
+        {
+          "info": {
+            "name": "Get namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Get the namespace IRI for a given prefix."
+        },
+        {
+          "info": {
+            "name": "Set namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Set the namespace IRI for the given prefix."
+        },
+        {
+          "info": {
+            "name": "Delete namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/rdf4j-server/repositories/:repositoryID/namespaces/:prefix",
+            "params": [
+              {
+                "name": "repositoryID",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the repository."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "The namespace prefix."
+              }
+            ]
+          },
+          "docs": "Remove the namespace declaration for the given prefix."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
