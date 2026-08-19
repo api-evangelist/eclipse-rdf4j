@@ -31,7 +31,7 @@ tags:
   - Triple Store
 created: '2024-01-01'
 modified: '2026-05-19'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
 - aid: eclipse-rdf4j:eclipse-rdf4j-contexts-api
   name: Eclipse RDF4J Contexts API
