@@ -24,6 +24,15 @@ tags:
   - Eclipse Foundation
   - Java
   - Linked Data
+  - Open-Source
+  - RDF
+  - Semantic Web
+  - SPARQL
+  - Triple Store
+tags_raw:
+  - Eclipse Foundation
+  - Java
+  - Linked Data
   - Open Source
   - RDF
   - Semantic Web
@@ -39,6 +48,8 @@ apis:
   humanURL: https://rdf4j.org/documentation/reference/rest-api/
   baseURL: http://localhost:8080/rdf4j-server
   tags:
+  - Context
+  tags_raw:
   - Contexts
   properties:
   - type: OpenAPI
@@ -135,6 +146,8 @@ apis:
   humanURL: https://rdf4j.org/documentation/reference/rest-api/
   baseURL: http://localhost:8080/rdf4j-server
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
