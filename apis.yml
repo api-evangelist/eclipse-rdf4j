@@ -6,6 +6,18 @@ description: >-
   Server) and a web-based Workbench. The framework offers an easy-to-use Java API and SPARQL 1.1 support, and integrates
   with leading RDF database solutions.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
