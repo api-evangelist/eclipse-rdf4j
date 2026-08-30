@@ -60,7 +60,7 @@ apis:
   humanURL: https://rdf4j.org/documentation/reference/rest-api/
   baseURL: http://localhost:8080/rdf4j-server
   tags:
-  - Context
+  - Contexts
   tags_raw:
   - Contexts
   properties:
