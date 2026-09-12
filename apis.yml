@@ -171,6 +171,8 @@ apis:
   - type: Repository
     url: https://github.com/eclipse/rdf4j
 common:
+  - type: Website
+    url: https://www.rdf4j.org/
   - type: Releases
     url: https://github.com/eclipse/rdf4j/releases
   - type: SecurityPolicy
