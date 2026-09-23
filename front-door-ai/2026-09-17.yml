@@ -1,0 +1,24 @@
+# Front Door AI Index — eclipse-rdf4j — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: eclipse-rdf4j
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.rdf4j.org
+  final_host: rdf4j.org
+  ownership: own
+  owner: eclipse-rdf4j
+  shares_host_with: null
+  inherited_from: null
+  verdict: silent
+  score: 0
+  host_score: 0
+  density: 0.0
+  words: 261
+  tiers:
+    agentic: 0
+    core: 0
+    model: 0
+  ambiguous: 0
+  top_terms: null

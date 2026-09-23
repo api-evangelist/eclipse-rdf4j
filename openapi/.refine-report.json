@@ -1,13 +1,7 @@
 {
   "provider": "eclipse-rdf4j",
   "sources": [
-    "eclipse-rdf4j-contexts-api-openapi.yml",
-    "eclipse-rdf4j-namespaces-api-openapi.yml",
-    "eclipse-rdf4j-protocol-api-openapi.yml",
-    "eclipse-rdf4j-repositories-api-openapi.yml",
-    "eclipse-rdf4j-size-api-openapi.yml",
-    "eclipse-rdf4j-statements-api-openapi.yml",
-    "eclipse-rdf4j-transactions-api-openapi.yml"
+    "_original/rdf4j-server-rest-api-openapi.yml"
   ],
   "outputs": [
     "eclipse-rdf4j-contexts-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rdf4j-server-rest-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "eclipse-rdf4j-contexts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-namespaces-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-protocol-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-repositories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-size-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-statements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eclipse-rdf4j-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
