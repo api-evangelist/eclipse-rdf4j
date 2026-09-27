@@ -8,6 +8,9 @@ description: >-
 type: Index
 deliveryModel:
   model: unknown
+  license_evidence:
+    not_product:
+    - eclipse/rdf4j
   open_source: unknown
   commercial: false
   callable_host: false
@@ -15,8 +18,8 @@ deliveryModel:
   confidence: low
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -36,7 +39,7 @@ tags:
   - Eclipse Foundation
   - Java
   - Linked Data
-  - Open-Source
+  - Open Source
   - RDF
   - Semantic Web
   - SPARQL
@@ -50,6 +53,7 @@ tags_raw:
   - Semantic Web
   - SPARQL
   - Triple Store
+  - Open-Source
 created: '2024-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.23'

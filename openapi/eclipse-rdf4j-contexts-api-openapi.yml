@@ -34,14 +34,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/SparqlResults'
 components:
-  parameters:
-    RepositoryID:
-      name: repositoryID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Identifier of the repository.
   schemas:
     SparqlResults:
       type: object
@@ -72,6 +64,14 @@ components:
                       type: string
                     datatype:
                       type: string
+  parameters:
+    RepositoryID:
+      name: repositoryID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Identifier of the repository.
 externalDocs:
   description: RDF4J Server REST API documentation
   url: https://rdf4j.org/documentation/reference/rest-api/
