@@ -2,10 +2,6 @@
   "repo": "eclipse-rdf4j",
   "feeds": [
     {
-      "source": "https://github.com/eclipse/rdf4j/blob/main/LICENSE.md",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://rdf4j.org/index.xml",
       "feed_url": "https://rdf4j.org/index.xml",
       "title": "",
@@ -13,7 +9,7 @@
       "method": "feed"
     }
   ],
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 79,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
