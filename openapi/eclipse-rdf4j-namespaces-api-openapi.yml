@@ -1,134 +1,150 @@
 openapi: 3.2.0
 info:
-  title: RDF4J Server REST Namespaces API
-  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
-  version: '5.0'
-  contact:
-    name: Eclipse RDF4J
-    url: https://rdf4j.org/
-    email: rdf4j-dev@eclipse.org
-  license:
-    name: Eclipse Distribution License v1.0
-    url: https://www.eclipse.org/org/documents/edl-v10.php
+  title: RDF4J REST Namespaces API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
 servers:
-- url: http://localhost:8080/rdf4j-server
-  description: Default local RDF4J Server installation
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
 tags:
 - name: Namespaces
-  description: Manage namespace prefix declarations.
+  description: Namespaces management
 paths:
   /repositories/{repositoryID}/namespaces:
-    parameters:
-    - $ref: '#/components/parameters/RepositoryID'
     get:
       tags:
       - Namespaces
-      summary: List namespaces
-      description: List all namespace prefix declarations in the repository.
-      operationId: listNamespaces
+      summary: Retrieve namespaces
+      description: Fetch all namespace declaration info available in the repository
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
       responses:
-        '200':
-          description: SPARQL results with prefix and namespace.
+        200:
+          description: List of namespaces encoded as tuple query result.
           content:
+            application/sparql-results+xml:
+              schema:
+                type: object
+                xml:
+                  name: sparql
+                  namespace: http://www.w3.org/2005/sparql-results#
+              example: "<?xml version='1.0' encoding='UTF-8'?>\n<sparql xmlns='http://www.w3.org/2005/sparql-results#'>\n  <head>\n    <variable name='prefix'/>\n    <variable name='namespace'/>\n  </head>\n  <results ordered='false' distinct='false'>\n    <result>\n      <binding name='prefix'>\n        <literal>rdf</literal>\n      </binding>\n      <binding name='namespace'>\n        <literal>http://www.w3.org/1999/02/22-rdf-syntax-ns#</literal>\n      </binding>\n    </result>\n  </results>\n</sparql>\n"
+            application/x-binary-rdf-results-table:
+              schema:
+                type: string
+                format: binary
             application/sparql-results+json:
               schema:
-                $ref: '#/components/schemas/SparqlResults'
+                type: object
+                format: json
+      operationId: getRepositoriesByRepositoryIDNamespaces
+      x-operation-id-source: derived
     delete:
       tags:
       - Namespaces
-      summary: Clear namespaces
-      description: Remove all namespace prefix declarations from the repository.
-      operationId: clearNamespaces
+      summary: Clear all namespaces
+      description: Remove all namespace declarations from the repository
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
       responses:
-        '204':
-          description: Namespaces cleared.
-  /repositories/{repositoryID}/namespaces/{prefix}:
-    parameters:
-    - $ref: '#/components/parameters/RepositoryID'
-    - name: prefix
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The namespace prefix.
+        204:
+          description: All namespaces were removed
+      operationId: deleteRepositoriesByRepositoryIDNamespaces
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/namespaces/{namespacesPrefix}:
     get:
       tags:
       - Namespaces
-      summary: Get namespace
-      description: Get the namespace IRI for a given prefix.
-      operationId: getNamespace
+      summary: Get namespace by prefix
+      description: Gets the namespace that has been defined for a particular prefix.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: namespacesPrefix
+        in: path
+        required: true
+        description: URI prefix of a RDF resource
+        schema:
+          type: string
       responses:
-        '200':
-          description: Namespace IRI as plain text.
+        200:
+          description: The defined namespace of the given prefix.
           content:
             text/plain:
               schema:
                 type: string
-        '404':
-          description: Prefix not found.
+              example: http://www.example.com
+      operationId: getRepositoriesByRepositoryIDNamespacesByNamespacesPrefix
+      x-operation-id-source: derived
     put:
       tags:
       - Namespaces
-      summary: Set namespace
-      description: Set the namespace IRI for the given prefix.
-      operationId: setNamespace
-      requestBody:
+      summary: Set namespace for a particular prefix
+      description: Sets a new namespace for a particular prefix. If the prefix was previously mapped to a different namespace, this will be overwritten.
+      parameters:
+      - name: repositoryID
+        in: path
         required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: namespacesPrefix
+        in: path
+        required: true
+        description: URI prefix of a RDF resource
+        schema:
+          type: string
+        example: ex
+      requestBody:
         content:
           text/plain:
             schema:
               type: string
+            example: http://www.example.com
       responses:
-        '204':
-          description: Namespace set.
+        204:
+          description: The defined namespace was successfully set to the given prefix.
+      operationId: putRepositoriesByRepositoryIDNamespacesByNamespacesPrefix
+      x-operation-id-source: derived
     delete:
       tags:
       - Namespaces
-      summary: Delete namespace
-      description: Remove the namespace declaration for the given prefix.
-      operationId: deleteNamespace
+      summary: Remove namespace for a particular prefix
+      description: Removes the namespace that has been defined for a particular prefix.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: namespacesPrefix
+        in: path
+        required: true
+        description: URI prefix of a RDF resource
+        schema:
+          type: string
       responses:
-        '204':
-          description: Namespace removed.
-components:
-  schemas:
-    SparqlResults:
-      type: object
-      description: SPARQL 1.1 Query Results JSON Format.
-      properties:
-        head:
-          type: object
-          properties:
-            vars:
-              type: array
-              items:
-                type: string
-        results:
-          type: object
-          properties:
-            bindings:
-              type: array
-              items:
-                type: object
-                additionalProperties:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                    value:
-                      type: string
-                    xml:lang:
-                      type: string
-                    datatype:
-                      type: string
-  parameters:
-    RepositoryID:
-      name: repositoryID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Identifier of the repository.
+        204:
+          description: The defined namespace with the given prefix was successfully removed.
+      operationId: deleteRepositoriesByRepositoryIDNamespacesByNamespacesPrefix
+      x-operation-id-source: derived
 externalDocs:
-  description: RDF4J Server REST API documentation
   url: https://rdf4j.org/documentation/reference/rest-api/

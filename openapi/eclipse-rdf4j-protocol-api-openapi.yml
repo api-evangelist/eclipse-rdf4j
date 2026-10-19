@@ -1,37 +1,34 @@
 openapi: 3.2.0
 info:
-  title: RDF4J Server REST Protocol API
-  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
-  version: '5.0'
-  contact:
-    name: Eclipse RDF4J
-    url: https://rdf4j.org/
-    email: rdf4j-dev@eclipse.org
-  license:
-    name: Eclipse Distribution License v1.0
-    url: https://www.eclipse.org/org/documents/edl-v10.php
+  title: RDF4J REST Protocol API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
 servers:
-- url: http://localhost:8080/rdf4j-server
-  description: Default local RDF4J Server installation
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
 tags:
 - name: Protocol
-  description: Protocol version of the server.
+  description: Protocol verification
 paths:
   /protocol:
     get:
       tags:
       - Protocol
-      summary: Get protocol version
-      description: Returns the protocol version supported by the RDF4J Server.
-      operationId: getProtocolVersion
+      summary: Fetch the protocol version
+      description: The version of the protocol that the server uses to communicate over HTTP.
       responses:
         '200':
-          description: Protocol version as plain text.
+          description: The protocol version
           content:
             text/plain:
               schema:
-                type: string
-                example: '12'
+                type: integer
+                format: int32
+              example: 10
+      operationId: getProtocol
+      x-operation-id-source: derived
 externalDocs:
-  description: RDF4J Server REST API documentation
   url: https://rdf4j.org/documentation/reference/rest-api/

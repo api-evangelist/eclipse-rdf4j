@@ -1,0 +1,207 @@
+openapi: 3.2.0
+info:
+  title: RDF4J REST Graph Store API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
+servers:
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
+tags:
+- name: Graph Store
+  description: The SPARQL 1.1 Graph Store HTTP Protocol is supported on a per-repository basis. The functionality is accessible at the /repositories//rdf-graphs/service endpoint (for indirectly referenced named graphs), and at /repositories//rdf-graphs/ for directly referenced named graphs. A request on a directly referenced named graph entails that the request URL itself is used as the named graph identifier in the repository.
+  externalDocs:
+    url: https://www.w3.org/TR/sparql11-http-rdf-update/
+paths:
+  /repositories/{repositoryID}/rdf-graphs/{graph}:
+    get:
+      tags:
+      - Graph Store
+      summary: Fetch all statements
+      description: Fetch all statements from a directly referenced named graph.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: graph
+        in: path
+        required: true
+        description: URL path part uniquely identifying a named graph. The entire request url is read as a named graph.
+        schema:
+          type: string
+      responses:
+        200:
+          $ref: '#/components/responses/200RdfData'
+      operationId: getRepositoriesByRepositoryIDRdfGraphsByGraph
+      x-operation-id-source: derived
+    post:
+      tags:
+      - Graph Store
+      summary: Add statements
+      description: Add statements to a directly referenced named graph.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: graph
+        in: path
+        required: true
+        description: URL path part uniquely identifying a named graph. The entire request url is read as a named graph.
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/RdfData'
+      responses:
+        204:
+          description: The data was successfully updated
+      operationId: postRepositoriesByRepositoryIDRdfGraphsByGraph
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Graph Store
+      summary: Clear a directly referenced named graph
+      description: Clear a directly referenced named graph.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: graph
+        in: path
+        required: true
+        description: URL path part uniquely identifying a named graph. The entire request url is read as a named graph.
+        schema:
+          type: string
+      responses:
+        204:
+          description: Successfully cleared the defined named graph
+      operationId: deleteRepositoriesByRepositoryIDRdfGraphsByGraph
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/rdf-graphs/service:
+    get:
+      tags:
+      - Graph Store
+      summary: Get statements from an indirectly referenced named graph
+      description: Fetch all statements from an indirectly referenced named graph.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: graph
+        in: query
+        required: false
+        description: Indirectly referenced named graph name. The named graph URI is the value of this parameter.
+        schema:
+          type: string
+      - name: default
+        in: query
+        required: false
+        allowEmptyValue: true
+        description: Default named graph.
+        schema:
+          type: string
+      responses:
+        200:
+          $ref: '#/components/responses/200RdfData'
+      operationId: getRepositoriesByRepositoryIDRdfGraphsService
+      x-operation-id-source: derived
+components:
+  responses:
+    200RdfData:
+      description: RDF data result
+      content:
+        application/rdf+xml:
+          schema:
+            type: object
+            xml:
+              name: RDF
+              namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        text/plain:
+          schema:
+            type: string
+        text/turtle:
+          schema:
+            type: string
+        text/rdf+n3:
+          schema:
+            type: string
+        text/x-nquads:
+          schema:
+            type: string
+        application/ld+json:
+          schema:
+            type: object
+            format: json
+        application/rdf+json:
+          schema:
+            type: object
+            format: json
+        application/trix:
+          schema:
+            type: object
+            xml:
+              name: TriX
+        application/x-trig:
+          schema:
+            type: string
+        application/x-binary-rdf:
+          schema:
+            type: string
+            format: binary
+  requestBodies:
+    RdfData:
+      description: RDF data payload
+      content:
+        application/rdf+xml:
+          schema:
+            type: object
+            xml:
+              name: RDF
+              namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        text/plain:
+          schema:
+            type: string
+        text/turtle:
+          schema:
+            type: string
+        text/rdf+n3:
+          schema:
+            type: string
+        text/x-nquads:
+          schema:
+            type: string
+        application/ld+json:
+          schema:
+            type: object
+            format: json
+        application/rdf+json:
+          schema:
+            type: object
+            format: json
+        application/trix:
+          schema:
+            type: object
+            xml:
+              name: TriX
+        application/x-trig:
+          schema:
+            type: string
+        application/x-binary-rdf:
+          schema:
+            type: string
+            format: binary
+externalDocs:
+  url: https://rdf4j.org/documentation/reference/rest-api/

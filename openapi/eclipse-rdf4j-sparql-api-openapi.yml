@@ -1,0 +1,308 @@
+openapi: 3.2.0
+info:
+  title: RDF4J REST SPARQL API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
+servers:
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
+tags:
+- name: Sparql
+  description: SPARQL Query and Update execution
+paths:
+  /repositories/{repositoryID}:
+    get:
+      tags:
+      - Sparql
+      summary: Execute SPARQL query
+      description: Execute a SPARQL query on the repository. The result format is based on the type of result (boolean, variable bindings, or RDF data) and the negotiated acceptable content-type. Note that RDF4J supports executing SPARQL queries with either a GET or a POST request. POST is supported for queries that are too large to be encoded as a query parameter.
+      parameters:
+      - name: repositoryID
+        in: path
+        description: The repository ID
+        required: true
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: The query to evaluate
+        required: true
+        schema:
+          type: string
+          example: select * where {?s ?p ?o} limit 10
+      - name: queryLn
+        in: query
+        description: Specifies the query language that is used for the query. Acceptable values are strings denoting the query languages supported by the server, i.e. 'sparql' for SPARQL queries. If not specified, the server assumes the query is a SPARQL query
+        required: false
+        schema:
+          type: string
+      - name: infer
+        in: query
+        description: Specifies whether inferred statements should be included in the query evaluation. Inferred statements are included by default if they are available in the repository. Specifying any value other than 'true' (ignoring case) restricts the query evluation to explicit statements only.
+        required: false
+        schema:
+          type: boolean
+      - name: $<varname>
+        in: query
+        required: false
+        description: Specifies variable bindings. Variables appearing in the query can be bound to a specific value outside the actual query using this option. The value should be an N-Triples encoded RDF value.
+        schema:
+          type: string
+      - name: timeout
+        in: query
+        required: false
+        description: Specifies a maximum query execution time, in whole seconds. The value should be an integer. A setting of 0 or a negative number indicates unlimited query time (the default).
+        schema:
+          type: integer
+      - name: distinct
+        in: query
+        required: false
+        description: Specifies if only distinct query solutions should be returned. The value should be true or false. If the supplied SPARQL query itself already has a DISTINCT modifier, this parameter will have no effect.
+        schema:
+          type: boolean
+      - name: limit
+        in: query
+        required: false
+        description: Specifies the maximum number of query solutions to return. The value should be a positive integer. If the supplied SPARQL query itself already has a LIMIT modifier, this parameter will only have an effect if the supplied value is lower than the LIMIT value in the query.
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Specifies the number of query solutions to skip. The value should be a positive integer. This parameter is cumulative with any OFFSET modifier in the supplied SPARQL query itself.
+        schema:
+          type: integer
+      - name: explain
+        in: query
+        required: false
+        description: 'The level of explanation to return. If specified, the server will return an explanation of the query execution plan. The value should be one of the following:
+
+          - `Unoptimized`: Simple parsed plan
+
+          - `Optimized`: Parsed and optimized plan, including cost estimation
+
+          - `Executed`: Plan as it was executed, including actual result size
+
+          - `Timed`: Executed plan with timing details for each node
+
+          '
+        schema:
+          type: string
+          enum:
+          - Unoptimized
+          - Optimized
+          - Executed
+          - Timed
+      responses:
+        '200':
+          $ref: '#/components/responses/200SparqlResult'
+      operationId: getRepositoriesByRepositoryID
+      x-operation-id-source: derived
+    post:
+      tags:
+      - Sparql
+      summary: Execute SPARQL query
+      description: Execute a SPARQL query on the repository. The result format is based on the type of result (boolean, variable bindings, or RDF data) and the negotiated acceptable content-type. Note that RDF4J supports executing SPARQL queries with either a GET or a POST request. POST is supported for queries that are too large to be encoded as a query parameter.
+      parameters:
+      - name: repositoryID
+        in: path
+        description: The repository ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the SPARQL query to execute
+        required: true
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+            example: SELECT * WHERE {?S ?P ?O } LIMIT 10
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+            example: query=SELECT%20%2A%20WHERE%20%7B%3FS%20%3FP%20%3FO%20%7D%20LIMIT%2010
+      responses:
+        '200':
+          $ref: '#/components/responses/200SparqlResult'
+      operationId: postRepositoriesByRepositoryID
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/statements:
+    post:
+      tags:
+      - Sparql
+      summary: Execute SPARQL update or upload data
+      description: Update the data in the repository. The data supplied with this request is expected to contain either a SPARQL 1.1 Update string, an RDF document, or a special purpose transaction document. If a SPARQL 1.1 Update string is supplied, the update operation will be parsed and executed. If an RDF document is supplied, the statements found in the RDF document will be added to the repository. If a transaction document is supplied, the updates specified in the transaction document will be executed.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: baseURI
+        in: query
+        description: Specifies the base URI to resolve any relative URIs found in uploaded data against.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                update:
+                  type: string
+            example:
+              update: INSERT {?s ?p ?o} WHERE {?s ?p ?o}
+          application/sparql-update:
+            schema:
+              type: string
+            example: INSERT {?s ?p ?o} WHERE {?s ?p ?o}
+          application/rdf+xml:
+            schema:
+              type: object
+              xml:
+                name: RDF
+                namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+          text/plain:
+            schema:
+              type: string
+          text/turtle:
+            schema:
+              type: string
+          text/rdf+n3:
+            schema:
+              type: string
+          text/x-nquads:
+            schema:
+              type: string
+          application/ld+json:
+            schema:
+              type: object
+              format: json
+          application/rdf+json:
+            schema:
+              type: object
+              format: json
+          application/trix:
+            schema:
+              type: object
+              xml:
+                name: TriX
+          application/x-trig:
+            schema:
+              type: string
+          application/x-binary-rdf:
+            schema:
+              type: string
+              format: binary
+          application/x-rdftransaction:
+            schema:
+              type: string
+      responses:
+        204:
+          description: The data was seccussfully updated
+      operationId: postRepositoriesByRepositoryIDStatements
+      x-operation-id-source: derived
+components:
+  examples:
+    SparqlJsonBindings:
+      value:
+        head:
+          vars:
+          - s
+          - p
+          - o
+          results:
+            bindings:
+            - s:
+                type: uri
+                value: http://example.org/s1
+            - p:
+                type: uri
+                value: http://example.org/p1
+            - o:
+                type: literal
+                value: foo
+    SparqlJsonBoolean:
+      value:
+        head: {}
+        boolean: true
+    SparqlXmlBoolean:
+      value: "<?xml version=\"1.0\"?>\n<sparql xmlns=\"http://www.w3.org/2005/sparql-results#\">\n  <head>\n  </head>\n  <boolean>true</boolean>\n</sparql>\n"
+    SparqlXmlBindings:
+      value: "<?xml version='1.0' encoding='UTF-8'?>\n<sparql xmlns='http://www.w3.org/2005/sparql-results#'>\n  <head>\n    <variable name='s'/>\n    <variable name='p'/>\n    <variable name='o'/>\n  </head>\n  <results ordered='false' distinct='false'>\n    <result>\n      <binding name='s'>\n        <uri>http://example.org/s1</uri>\n      </binding>\n      <binding name='p'>\n        <uri>http://example.org/p1</uri>\n      </binding>\n      <binding name='o'>\n        <literal>foo</literal>\n      </binding>\n    </result>\n  </results>\n</sparql>\n"
+  responses:
+    200SparqlResult:
+      description: SPARQL query result
+      content:
+        application/sparql-results+xml:
+          schema:
+            type: object
+            xml:
+              name: sparql
+              namespace: http://www.w3.org/2005/sparql-results#
+          examples:
+            SelectQueryResult:
+              $ref: '#/components/examples/SparqlXmlBindings'
+            AskQueryResult:
+              $ref: '#/components/examples/SparqlXmlBoolean'
+        application/x-binary-rdf-results-table:
+          schema:
+            type: string
+            format: binary
+        application/sparql-results+json:
+          examples:
+            SelectQueryResult:
+              $ref: '#/components/examples/SparqlJsonBindings'
+            AskQueryResult:
+              $ref: '#/components/examples/SparqlJsonBoolean'
+        text/boolean:
+          schema:
+            type: string
+            format: boolean
+          example: true
+        application/rdf+xml:
+          schema:
+            type: object
+            xml:
+              name: RDF
+              namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        text/plain:
+          schema:
+            type: string
+        text/turtle:
+          schema:
+            type: string
+        text/rdf+n3:
+          schema:
+            type: string
+        text/x-nquads:
+          schema:
+            type: string
+        application/ld+json:
+          schema:
+            type: object
+            format: json
+        application/rdf+json:
+          schema:
+            type: object
+            format: json
+        application/trix:
+          schema:
+            type: object
+            xml:
+              name: TriX
+        application/x-trig:
+          schema:
+            type: string
+        application/x-binary-rdf:
+          schema:
+            type: string
+            format: binary
+externalDocs:
+  url: https://rdf4j.org/documentation/reference/rest-api/

@@ -1,208 +1,351 @@
 openapi: 3.2.0
 info:
-  title: RDF4J Server REST Repositories API
-  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
-  version: '5.0'
-  contact:
-    name: Eclipse RDF4J
-    url: https://rdf4j.org/
-    email: rdf4j-dev@eclipse.org
-  license:
-    name: Eclipse Distribution License v1.0
-    url: https://www.eclipse.org/org/documents/edl-v10.php
+  title: RDF4J REST Repositories API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
 servers:
-- url: http://localhost:8080/rdf4j-server
-  description: Default local RDF4J Server installation
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
 tags:
 - name: Repositories
-  description: Manage and inspect RDF repositories.
+  description: Repository management
 paths:
   /repositories:
     get:
       tags:
       - Repositories
-      summary: List repositories
-      description: Returns a list of all repositories available on the server.
-      operationId: listRepositories
+      summary: Retrieve a list of Repositories
+      description: Get a list of available Repositories, including ID, title, read- and write access parameters for each listed repository. The list is formatted as a tuple query result with variables 'uri', 'id', 'title', 'readable' and 'writable'. The 'uri' value gives the location of the repository and the 'readable' and 'writable' values are boolean typed literals indicating read- and write permissions.
+      parameters:
+      - name: Accept
+        in: header
+        schema:
+          type: string
+        example: application/sparql-results+xml, */*;q=0.5
       responses:
         '200':
-          description: SPARQL results with one row per repository.
+          description: Repository list
           content:
-            application/sparql-results+json:
-              schema:
-                $ref: '#/components/schemas/SparqlResults'
             application/sparql-results+xml:
               schema:
+                type: object
+                xml:
+                  name: sparql
+                  namespace: http://www.w3.org/2005/sparql-results#
+              example: "<?xml version='1.0' encoding='UTF-8'?>\n<sparql xmlns='http://www.w3.org/2005/sparql-results#'>\n  <head>\n    <variable name='uri'/>\n    <variable name='id'/>\n    <variable name='title'/>\n    <variable name='readable'/>\n    <variable name='writable'/>\n  </head>\n  <results ordered='false' distinct='false'>\n    <result>\n      <binding name='uri'>\n        <uri>http://localhost:8080/rdf4j-server/repositories/mem-rdf</uri>\n      </binding>\n      <binding name='id'>\n        <literal>mem-rdf</literal>\n      </binding>\n      <binding name='title'>\n        <literal>Main Memory RDF repository</literal>\n      </binding>\n      <binding name='readable'>\n        <literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>\n      </binding>\n      <binding name='writable'>\n        <literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>\n      </binding>\n    </result>\n  </results>\n</sparql>\n"
+            application/x-binary-rdf-results-table:
+              schema:
                 type: string
-  /repositories/{repositoryID}:
-    parameters:
-    - $ref: '#/components/parameters/RepositoryID'
-    get:
-      tags:
-      - Repositories
-      summary: Query repository (SPARQL)
-      description: Execute a SPARQL query (SELECT, ASK, CONSTRUCT, DESCRIBE) against the repository. The query may be passed via the `query` query parameter.
-      operationId: queryRepository
-      parameters:
-      - name: query
-        in: query
-        required: true
-        schema:
-          type: string
-        description: SPARQL query string.
-      - name: queryLn
-        in: query
-        required: false
-        schema:
-          type: string
-          default: sparql
-      - name: infer
-        in: query
-        required: false
-        schema:
-          type: boolean
-          default: true
-      - name: default-graph-uri
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-            format: uri
-      - name: named-graph-uri
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-            format: uri
-      responses:
-        '200':
-          description: Query result.
-          content:
+                format: binary
             application/sparql-results+json:
               schema:
-                $ref: '#/components/schemas/SparqlResults'
-            application/rdf+xml:
-              schema:
-                type: string
-            text/turtle:
-              schema:
-                type: string
-        '400':
-          description: Malformed query.
-        '404':
-          description: Repository not found.
-    post:
-      tags:
-      - Repositories
-      summary: SPARQL query or update
-      description: Execute a SPARQL query or SPARQL Update via POST. Use form parameters `query` or `update`, or send the SPARQL query/update as the request body with the appropriate `Content-Type`.
-      operationId: postQueryOrUpdate
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                query:
-                  type: string
-                update:
-                  type: string
-                queryLn:
-                  type: string
-                  default: sparql
-                infer:
-                  type: boolean
-                  default: true
-          application/sparql-query:
-            schema:
-              type: string
-          application/sparql-update:
-            schema:
-              type: string
-      responses:
-        '200':
-          description: Query or update result.
-        '204':
-          description: Update applied successfully.
-        '400':
-          description: Malformed query or update.
-        '404':
-          description: Repository not found.
-    put:
-      tags:
-      - Repositories
-      summary: Create or configure repository
-      description: Create or replace the repository configuration for the specified ID. Body contains an RDF representation of the repository configuration.
-      operationId: createRepository
-      requestBody:
-        required: true
-        content:
-          application/x-turtle:
-            schema:
-              type: string
-          application/rdf+xml:
-            schema:
-              type: string
-      responses:
-        '204':
-          description: Repository created or updated.
-        '400':
-          description: Malformed configuration.
+                type: object
+                format: json
+      operationId: getRepositories
+      x-operation-id-source: derived
+  /repositories/{repositoryID}:
     delete:
       tags:
       - Repositories
-      summary: Delete repository
-      description: Delete the repository and all of its data.
-      operationId: deleteRepository
+      summary: Repository removal
+      description: 'Delete a specific repository by ID. Care should be taken with the use of this method: the result of this operation is the complete removal of the repository from the server, including its configuration settings and (if present) data directory'
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      responses:
+        204:
+          description: The repository was deleted
+      operationId: deleteRepositoriesByRepositoryID
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Repositories
+      summary: Repository creation
+      parameters:
+      - name: repositoryID
+        in: path
+        description: The repository ID
+        required: true
+        schema:
+          type: string
+      description: 'A new repository with can be created on the server by sending a PUT request to this endpoint.
+
+
+        The payload supplied with this request is an RDF document, containing an RDF-serialized form of a repository configuration. If the repository with the specified id previously existed, the Server will refuse the request. If it does not exist, a new, empty, repository will be created.'
+      requestBody:
+        description: configuration of the repository to be created
+        required: true
+        $ref: '#/components/requestBodies/RdfData'
       responses:
         '204':
-          description: Repository deleted.
-        '404':
-          description: Repository not found.
-components:
-  schemas:
-    SparqlResults:
-      type: object
-      description: SPARQL 1.1 Query Results JSON Format.
-      properties:
-        head:
-          type: object
-          properties:
-            vars:
-              type: array
-              items:
+          description: created
+      operationId: putRepositoriesByRepositoryID
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/statements:
+    get:
+      tags:
+      - Repositories
+      summary: Fetch statements from the repository
+      description: Get RDF statements from the repository matching the filtering parameters
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: subj
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded resource as subject.
+        schema:
+          type: string
+      - name: pred
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded URI as predicate.
+        schema:
+          type: string
+      - name: obj
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded value as object.
+        schema:
+          type: string
+      - name: context
+        in: query
+        description: If specified, restricts the operation to one or more specific contexts in the repository. The value of this parameter is either an N-Triples encoded URI or bnode ID, or the special value 'null' which represents all context-less statements. If multiple 'context' parameters are specified, the request will operate on the union of all specified contexts. The operation is executed on all statements that are in the repository if no context is specified.
+        schema:
+          type: string
+      - name: infer
+        in: query
+        description: Specifies whether inferred statements should be included in the result of GET requests. Inferred statements are included by default. Specifying any value other than 'true' (ignoring case) restricts the request to explicit statements only.
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/200RdfData'
+      operationId: getRepositoriesByRepositoryIDStatements
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Repositories
+      summary: Delete statements from the repository
+      description: Deletes statements from the repository matching the filtering parameters
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: subj
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded resource as subject.
+        schema:
+          type: string
+      - name: pred
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded URI as predicate.
+        schema:
+          type: string
+      - name: obj
+        in: query
+        description: Restricts the operation to statements with the specified N-Triples encoded value as object.
+        schema:
+          type: string
+      - name: context
+        in: query
+        description: If specified, restricts the operation to one or more specific contexts in the repository. The value of this parameter is either an N-Triples encoded URI or bnode ID, or the special value 'null' which represents all context-less statements. If multiple 'context' parameters are specified, the request will operate on the union of all specified contexts. The operation is executed on all statements that are in the repository if no context is specified.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The statements were successfully deleted
+      operationId: deleteRepositoriesByRepositoryIDStatements
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Repositories
+      summary: Replace data in the repository
+      description: Update data in the repository, replacing any existing data with the supplied data
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: context
+        in: query
+        description: If specified, restricts the operation to one or more specific contexts in the repository. The value of this parameter is either an N-Triples encoded URI or bnode ID, or the special value 'null' which represents all context-less statements. If multiple 'context' parameters are specified, the request will operate on the union of all specified contexts. The operation is executed on all statements that are in the repository if no context is specified.
+        schema:
+          type: string
+      - name: baseURI
+        in: query
+        description: Specifies the base URI to resolve any relative URIs found in uploaded data against
+        schema:
+          type: string
+      requestBody:
+        description: RDF data to be added, replacing any existing data.
+        required: true
+        $ref: '#/components/requestBodies/RdfData'
+      responses:
+        204:
+          description: The data was successfully updated
+      operationId: putRepositoriesByRepositoryIDStatements
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/size:
+    get:
+      tags:
+      - Repositories
+      summary: Repository size
+      description: The endpoint will give you the number of statements in the repository or in the specified context
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: context
+        in: query
+        schema:
+          type: string
+        description: If specified, restricts the operation to one or more specific contexts in the repository. The value of this parameter is either an N-Triples encoded URI or bnode ID, or the special value 'null' which represents all context-less statements. If multiple 'context' parameters are specified, the request will operate on the union of all specified contexts. The operation is executed on all statements that are in the repository if no context is specified.
+      responses:
+        200:
+          description: Get the size of (the contexts in) the specified repository.
+          content:
+            text/plain:
+              schema:
                 type: string
-        results:
-          type: object
-          properties:
-            bindings:
-              type: array
-              items:
+                format: number
+              example: 42
+      operationId: getRepositoriesByRepositoryIDSize
+      x-operation-id-source: derived
+  /repositories/{repositoryID}/contexts:
+    get:
+      tags:
+      - Repositories
+      summary: Retrieve context identifiers in the repository
+      description: Get a list of all context identifiers in the repository. The list is formatted as a tuple query result with a single variable “contextID”, which is bound to URIs and blank nodes that are used as context identifiers.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      responses:
+        200:
+          description: List of contexts encoded as tuple query result.
+          content:
+            application/sparql-results+xml:
+              schema:
                 type: object
-                additionalProperties:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                    value:
-                      type: string
-                    xml:lang:
-                      type: string
-                    datatype:
-                      type: string
-  parameters:
-    RepositoryID:
-      name: repositoryID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Identifier of the repository.
+                xml:
+                  name: sparql
+                  namespace: http://www.w3.org/2005/sparql-results#
+              example: "<?xml version='1.0' encoding='UTF-8'?>\n<sparql xmlns='http://www.w3.org/2005/sparql-results#'>\n  <head>\n    <variable name='contextID'/>\n  </head>\n  <results ordered='false' distinct='false'>\n    <result>\n      <binding name='contextID'>\n        <uri>urn:x-local:graph1</uri>\n      </binding>\n    </result>\n  </results>\n</sparql>\n"
+            application/x-binary-rdf-results-table:
+              schema:
+                type: string
+                format: binary
+            application/sparql-results+json:
+              schema:
+                type: object
+                format: json
+      operationId: getRepositoriesByRepositoryIDContexts
+      x-operation-id-source: derived
+components:
+  responses:
+    200RdfData:
+      description: RDF data result
+      content:
+        application/rdf+xml:
+          schema:
+            type: object
+            xml:
+              name: RDF
+              namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        text/plain:
+          schema:
+            type: string
+        text/turtle:
+          schema:
+            type: string
+        text/rdf+n3:
+          schema:
+            type: string
+        text/x-nquads:
+          schema:
+            type: string
+        application/ld+json:
+          schema:
+            type: object
+            format: json
+        application/rdf+json:
+          schema:
+            type: object
+            format: json
+        application/trix:
+          schema:
+            type: object
+            xml:
+              name: TriX
+        application/x-trig:
+          schema:
+            type: string
+        application/x-binary-rdf:
+          schema:
+            type: string
+            format: binary
+  requestBodies:
+    RdfData:
+      description: RDF data payload
+      content:
+        application/rdf+xml:
+          schema:
+            type: object
+            xml:
+              name: RDF
+              namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        text/plain:
+          schema:
+            type: string
+        text/turtle:
+          schema:
+            type: string
+        text/rdf+n3:
+          schema:
+            type: string
+        text/x-nquads:
+          schema:
+            type: string
+        application/ld+json:
+          schema:
+            type: object
+            format: json
+        application/rdf+json:
+          schema:
+            type: object
+            format: json
+        application/trix:
+          schema:
+            type: object
+            xml:
+              name: TriX
+        application/x-trig:
+          schema:
+            type: string
+        application/x-binary-rdf:
+          schema:
+            type: string
+            format: binary
 externalDocs:
-  description: RDF4J Server REST API documentation
   url: https://rdf4j.org/documentation/reference/rest-api/

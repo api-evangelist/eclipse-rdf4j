@@ -1,55 +1,64 @@
 openapi: 3.2.0
 info:
-  title: RDF4J Server REST Transactions API
-  description: REST API for the Eclipse RDF4J Server. Provides endpoints to list and manage RDF repositories, configure them, query and update their contents using SPARQL, manage namespaces, transactions, contexts and statements, and import/export RDF data in standard serialization formats. The Eclipse RDF4J Server is a Java server application that exposes this protocol over HTTP.
-  version: '5.0'
-  contact:
-    name: Eclipse RDF4J
-    url: https://rdf4j.org/
-    email: rdf4j-dev@eclipse.org
-  license:
-    name: Eclipse Distribution License v1.0
-    url: https://www.eclipse.org/org/documents/edl-v10.php
+  title: RDF4J REST Transactions API
+  version: '10'
+  description: 'The RDF4J REST API is an HTTP protocol that covers a fully compliant implementation of the SPARQL 1.1 Protocol W3C Recommendation. This ensures that RDF4J Server functions as a fully standard-compliant SPARQL endpoint.
+
+
+    The RDF4J REST API additionally supports the SPARQL 1.1 Graph Store HTTP Protocol W3C Recommendation. The RDF4J REST API extends the W3C standards in several aspects, the most important of which is database transaction management.'
 servers:
-- url: http://localhost:8080/rdf4j-server
-  description: Default local RDF4J Server installation
+- url: http://localhost:8080/rdf4j-server/
+  description: RDF4J Server on localhost
 tags:
 - name: Transactions
-  description: Group multiple operations in an atomic transaction.
+  description: RDF4J supports a REST-styleimplementation of a transactional protocol, by means of treating the transaction itself as a new resource that can be updated with consecutive operations. A transaction is started by a POST request to the transactions endpoint, which will return a new unique endpoint location for the new transaction. Operations (such as adding data, querying, committing/rolling back the transaction) are executed by means of PUT requests of consecutive operations against that unique transaction endpoint.
+  externalDocs:
+    url: https://rdf4j.org/documentation/programming/repository/#transactions
 paths:
   /repositories/{repositoryID}/transactions:
-    parameters:
-    - $ref: '#/components/parameters/RepositoryID'
     post:
       tags:
       - Transactions
-      summary: Begin transaction
-      description: Start a new transaction. The `Location` header of the response holds the transaction URL.
-      operationId: beginTransaction
+      summary: Start a new transaction
+      description: RDF4J supports a RESTful implementation of a transactional protocol, by means of treating the transaction itself as a new resource that can be updated with consecutive operations. A transaction is started by a POST request to the transactions endpoint, which will return a new unique endpoint location for the new transaction. Operations (such as adding data, querying, committing/rolling back the transaction) are executed by means of PUT requests of consecutive operations against that unique transaction endpoint.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+        example: myDB
       responses:
-        '201':
-          description: Transaction started.
+        201:
+          description: Started
           headers:
             Location:
+              description: URL of the newly created transaction resource
               schema:
                 type: string
-                format: uri
-              description: URL of the new transaction resource.
+              example: /rdf4j-server/repositories/myDB/transactions/64a5937f-c112-d014-a044-f0123b93
+      operationId: postRepositoriesByRepositoryIDTransactions
+      x-operation-id-source: derived
   /repositories/{repositoryID}/transactions/{transactionID}:
-    parameters:
-    - $ref: '#/components/parameters/RepositoryID'
-    - name: transactionID
-      in: path
-      required: true
-      schema:
-        type: string
     put:
       tags:
       - Transactions
-      summary: Execute transaction action
-      description: Perform an action within the transaction. The action is selected via the `action` query parameter (e.g. `ADD`, `DELETE`, `UPDATE`, `GET`, `SIZE`, `CLEAR`, `COMMIT`, `PING`).
-      operationId: executeTransactionAction
+      summary: Execute a transaction action
+      description: Transaction operations are carried on this endpoint. The full URI is the exact value of the Location header as returned by the request to start a transaction.
       parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: transactionID
+        in: path
+        required: true
+        description: The transaction ID
+        schema:
+          type: string
       - name: action
         in: query
         required: true
@@ -58,47 +67,159 @@ paths:
           enum:
           - ADD
           - DELETE
-          - UPDATE
           - GET
+          - QUERY
+          - UPDATE
           - SIZE
-          - CLEAR
           - COMMIT
           - PING
-      requestBody:
+        description: 'Specifies the type of operation being carried on the transaction.
+
+          '
+      - name: subj
+        in: query
         required: false
+        description: GET actions only. Restricts the operation to statements with the specified N-Triples encoded resource as subject.
+        schema:
+          type: string
+      - name: pred
+        in: query
+        required: false
+        description: GET actions only. Restricts the operation to statements with the specified N-Triples encoded resource as predicate.
+        schema:
+          type: string
+      - name: obj
+        in: query
+        required: false
+        description: GET actions only. Restricts the operation to statements with the specified N-Triples encoded resource as object.
+        schema:
+          type: string
+      - name: query
+        in: query
+        required: false
+        description: QUERY actions only. Specifies the SPARQL query to evaluate.
+        schema:
+          type: string
+      - name: queryLn
+        in: query
+        required: false
+        description: QUERY actions only. Specifies the query language that is used for the query. Acceptable values are strings denoting the query languages supported by the server, i.e 'sparql' for SPARQL queries. If not specified, the server assumes the query is a SPARQL query.
+        schema:
+          type: string
+      - name: infer
+        in: query
+        required: false
+        description: GET and QUERY actions only. Specifies whether inferred statements should be included in the result. Inferred statements are included by default (if available in the repository). Specifying any value other than 'true' (ignoring case) restricts the result to explicit statements only.
+        schema:
+          type: boolean
+      - name: update
+        in: query
+        required: false
+        description: UPDATE actions only. Specifies the SPARQL 1.1 Update operation to be executed. The value is expected to be a syntactically valid SPARQL 1.1 Update string.
+        schema:
+          type: string
+      - name: baseURI
+        in: query
+        required: false
+        description: UPDATE, DELETE, and ADD actions only. Specifies a base URI to be used for executing the operation.
+        schema:
+          type: string
+      - name: using-graph-uri
+        in: query
+        required: false
+        description: UPDATE actions only. One or more named graph URIs to be used as the default graph(s) for retrieving statements.
+        schema:
+          type: boolean
+      - name: using-named-graph-uri
+        in: query
+        required: false
+        description: UPDATE actions only. One or more named graph URIs to be used as named graphs for retrieving statements.
+        schema:
+          type: boolean
+      - name: remove-graph-uri
+        in: query
+        required: false
+        description: UPDATE actions only. One or more named graph URIs to be used as the default graph(s) for removing statements.
+        schema:
+          type: boolean
+      - name: insert-graph-uri
+        in: query
+        required: false
+        description: UPDATE actions only. One or more named graph URIs to be used as the default graph(s) for inserting statements.
+        schema:
+          type: boolean
+      requestBody:
+        description: 'RDF Data payload. Only relevant for ADD actions.
+
+          '
         content:
           application/rdf+xml:
+            schema:
+              type: object
+              xml:
+                name: RDF
+                namespace: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+          text/plain:
             schema:
               type: string
           text/turtle:
             schema:
               type: string
-          application/sparql-update:
+          text/rdf+n3:
             schema:
               type: string
+          text/x-nquads:
+            schema:
+              type: string
+          application/ld+json:
+            schema:
+              type: object
+              format: json
+          application/rdf+json:
+            schema:
+              type: object
+              format: json
+          application/trix:
+            schema:
+              type: object
+              xml:
+                name: TriX
+          application/x-trig:
+            schema:
+              type: string
+          application/x-binary-rdf:
+            schema:
+              type: string
+              format: binary
       responses:
-        '200':
-          description: Action executed.
-        '204':
-          description: Action executed (no content).
+        200:
+          description: OK
+        204:
+          description: No content
+      operationId: putRepositoriesByRepositoryIDTransactionsByTransactionID
+      x-operation-id-source: derived
     delete:
       tags:
       - Transactions
-      summary: Rollback transaction
-      description: Abort the transaction and discard all changes.
-      operationId: rollbackTransaction
+      summary: Abort a transaction
+      description: An active transaction can be aborted by means of a HTTP DELETE request on the transaction resource. This will execute a transaction rollback on the repository and will close the transaction. After executing a DELETE, further operations on the same transaction will result in an error.
+      parameters:
+      - name: repositoryID
+        in: path
+        required: true
+        description: The repository ID
+        schema:
+          type: string
+      - name: transactionID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The transaction ID
       responses:
-        '204':
-          description: Transaction rolled back.
-components:
-  parameters:
-    RepositoryID:
-      name: repositoryID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Identifier of the repository.
+        204:
+          description: Successfully aborted the defined transaction.
+      operationId: deleteRepositoriesByRepositoryIDTransactionsByTransactionID
+      x-operation-id-source: derived
 externalDocs:
-  description: RDF4J Server REST API documentation
   url: https://rdf4j.org/documentation/reference/rest-api/

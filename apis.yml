@@ -58,24 +58,6 @@ created: '2024-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.23'
 apis:
-- aid: eclipse-rdf4j:eclipse-rdf4j-contexts-api
-  name: Eclipse RDF4J Contexts API
-  description: Inspect named graphs (contexts) in a repository.
-  humanURL: https://rdf4j.org/documentation/reference/rest-api/
-  baseURL: http://localhost:8080/rdf4j-server
-  tags:
-  - Context
-  tags_raw:
-  - Contexts
-  properties:
-  - type: OpenAPI
-    url: openapi/eclipse-rdf4j-contexts-api-openapi.yml
-  - type: Documentation
-    url: https://rdf4j.org/documentation/reference/rest-api/
-  - type: GettingStarted
-    url: https://rdf4j.org/documentation/programming/getting-started/
-  - type: Repository
-    url: https://github.com/eclipse/rdf4j
 - aid: eclipse-rdf4j:eclipse-rdf4j-namespaces-api
   name: Eclipse RDF4J Namespaces API
   description: Manage namespace prefix declarations.
@@ -124,38 +106,6 @@ apis:
     url: https://rdf4j.org/documentation/programming/getting-started/
   - type: Repository
     url: https://github.com/eclipse/rdf4j
-- aid: eclipse-rdf4j:eclipse-rdf4j-size-api
-  name: Eclipse RDF4J Size API
-  description: Get the number of statements in a repository.
-  humanURL: https://rdf4j.org/documentation/reference/rest-api/
-  baseURL: http://localhost:8080/rdf4j-server
-  tags:
-  - Size
-  properties:
-  - type: OpenAPI
-    url: openapi/eclipse-rdf4j-size-api-openapi.yml
-  - type: Documentation
-    url: https://rdf4j.org/documentation/reference/rest-api/
-  - type: GettingStarted
-    url: https://rdf4j.org/documentation/programming/getting-started/
-  - type: Repository
-    url: https://github.com/eclipse/rdf4j
-- aid: eclipse-rdf4j:eclipse-rdf4j-statements-api
-  name: Eclipse RDF4J Statements API
-  description: Read and modify the RDF statements in a repository.
-  humanURL: https://rdf4j.org/documentation/reference/rest-api/
-  baseURL: http://localhost:8080/rdf4j-server
-  tags:
-  - Statements
-  properties:
-  - type: OpenAPI
-    url: openapi/eclipse-rdf4j-statements-api-openapi.yml
-  - type: Documentation
-    url: https://rdf4j.org/documentation/reference/rest-api/
-  - type: GettingStarted
-    url: https://rdf4j.org/documentation/programming/getting-started/
-  - type: Repository
-    url: https://github.com/eclipse/rdf4j
 - aid: eclipse-rdf4j:eclipse-rdf4j-transactions-api
   name: Eclipse RDF4J Transactions API
   description: Group multiple operations in an atomic transaction.
@@ -168,6 +118,43 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/eclipse-rdf4j-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-graph-store-api
+  name: Eclipse RDF4J Graph Store API
+  description: >-
+    The [SPARQL 1.1 Graph Store HTTP Protocol](https://www.w3.org/TR/sparql11-http-rdf-update/) is supported
+    on a per-repository basis. The functionality is accessible at the /repositories/<ID>/rdf-graphs/service
+    endpoint (for indirectly referenced named graphs), and at /repositories/<ID>/rdf-graphs/<NAME> for
+    directly referenced named graphs. A request on a directly referenced named graph entails that the
+    request URL itself is used as the named graph identifier in the repository.
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - Graph Store
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-graph-store-api-openapi.yml
+  - type: Documentation
+    url: https://rdf4j.org/documentation/reference/rest-api/
+  - type: GettingStarted
+    url: https://rdf4j.org/documentation/programming/getting-started/
+  - type: Repository
+    url: https://github.com/eclipse/rdf4j
+- aid: eclipse-rdf4j:eclipse-rdf4j-sparql-api
+  name: Eclipse RDF4J SPARQL API
+  description: SPARQL Query and Update execution
+  humanURL: https://rdf4j.org/documentation/reference/rest-api/
+  baseURL: http://localhost:8080/rdf4j-server
+  tags:
+  - SPARQL
+  properties:
+  - type: OpenAPI
+    url: openapi/eclipse-rdf4j-sparql-api-openapi.yml
   - type: Documentation
     url: https://rdf4j.org/documentation/reference/rest-api/
   - type: GettingStarted
