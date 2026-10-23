@@ -148,3 +148,9 @@ paths:
       x-operation-id-source: derived
 externalDocs:
   url: https://rdf4j.org/documentation/reference/rest-api/
+x-provenance:
+  method: harvested
+  publisher: Eclipse RDF4J
+  source: https://rdf4j.org/documentation/reference/rest-api/rdf4j-openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
