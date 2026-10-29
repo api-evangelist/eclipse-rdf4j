@@ -1,4 +1,4 @@
-# Eclipse RDF4J (eclipse-rdf4j)
+# Eclipse RDF4J
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,66 +66,130 @@
 
 Eclipse RDF4J is a powerful open-source Java framework for processing and handling RDF data. It supports creating, parsing, scalable storage, reasoning, and querying with RDF and Linked Data, and ships with an HTTP server (RDF4J Server) and a web-based Workbench. The framework offers an easy-to-use Java API and SPARQL 1.1 support, and integrates with leading RDF database solutions.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/refs/heads/main/apis.yml)
+**Areas:** Eclipse Foundation · Java · Linked Data · Open Source · RDF · Semantic Web · SPARQL · Triple Store
 
-## Scope
+## Eclipse RDF4J on APIs.io
 
-- **Type:** Index
+Everything profiled for Eclipse RDF4J is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/eclipse-rdf4j/](https://apis.io/providers/eclipse-rdf4j/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- Eclipse Foundation
-- Java
-- Linked Data
-- Open Source
-- RDF
-- Semantic Web
-- SPARQL
-- Triple Store
+- [Eclipse RDF4J Contexts API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-contexts-api/) — Inspect named graphs (contexts) in a repository.
+- [Eclipse RDF4J Namespaces API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-namespaces-api/) — Manage namespace prefix declarations.
+- [Eclipse RDF4J Protocol API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-protocol-api/) — Protocol version of the server.
+- [Eclipse RDF4J Repositories API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-repositories-api/) — Manage and inspect RDF repositories.
+- [Eclipse RDF4J Size API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-size-api/) — Get the number of statements in a repository.
+- [Eclipse RDF4J Statements API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-statements-api/) — Read and modify the RDF statements in a repository.
+- [Eclipse RDF4J Transactions API](https://apis.io/apis/eclipse-rdf4j/eclipse-rdf4j-transactions-api/) — Group multiple operations in an atomic transaction.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### RDF4J Server REST API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-REST API exposed by the Eclipse RDF4J Server for managing repositories, executing SPARQL queries and updates, working with statements, namespaces, contexts, and transactions, and importing/exporting RDF in standard serialization formats.
+- [Eclipse Rdf4J Agentic Access](https://apis.io/agentic-access/eclipse-rdf4j/eclipse-rdf4j-agentic-access/)
 
-- **Human URL:** [https://rdf4j.org/documentation/reference/rest-api/](https://rdf4j.org/documentation/reference/rest-api/)
-- **Base URL:** `http://localhost:8080/rdf4j-server`
+#### Collections (8)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- RDF
-- Repository
-- REST
-- SPARQL
-- Transactions
+- [RDF4J Server REST Contexts API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-contexts-api/)
+- [RDF4J Server REST Contexts Namespaces API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-namespaces-api/)
+- [RDF4J Server REST Contexts Protocol API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-protocol-api/)
+- [RDF4J Server REST Contexts Repositories API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-repositories-api/)
+- [RDF4J Server REST Contexts Size API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-size-api/)
+- [RDF4J Server REST Contexts Statements API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-statements-api/)
+- [RDF4J Server REST Contexts Transactions API](https://apis.io/collections/eclipse-rdf4j/open-eclipse-rdf4j-transactions-api/)
+- [RDF4J Server REST API](https://apis.io/collections/eclipse-rdf4j/open-rdf4j-server-rest-api/)
 
-#### Properties
+#### Security (1)
 
-- [Documentation](https://rdf4j.org/documentation/reference/rest-api/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/eclipse-rdf4j/main/openapi/rdf4j-server-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Getting Started](https://rdf4j.org/documentation/programming/getting-started/)
-- [Repository](https://github.com/eclipse/rdf4j)
-- [Postman Collection](collections/rdf4j-server-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rdf4j-server-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Eclipse Rdf4J Domain Security](https://apis.io/security/eclipse-rdf4j/eclipse-rdf4j-domain-security/)
 
-- [Getting Started](https://rdf4j.org/documentation/programming/getting-started/)
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Eclipse Rdf4J Plans Pricing](https://apis.io/plans/eclipse-rdf4j/eclipse-rdf4j-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Eclipse Rdf4J Rate Limits](https://apis.io/rate-limits/eclipse-rdf4j/eclipse-rdf4j-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Eclipse Rdf4J Finops](https://apis.io/finops/eclipse-rdf4j/eclipse-rdf4j-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.rdf4j.org/)
 - [Documentation](https://rdf4j.org/documentation/)
-- [Tutorials](https://rdf4j.org/documentation/tutorials/)
-- [Changelog](https://rdf4j.org/release-notes/)
-- [Issues](https://github.com/eclipse/rdf4j/issues)
+- [Getting started](https://rdf4j.org/documentation/programming/getting-started/)
 - [Support](https://github.com/eclipse/rdf4j/discussions)
-- [GitHub Organization](https://github.com/eclipse/rdf4j)
-- [License](https://github.com/eclipse/rdf4j/blob/main/LICENSE.md)
+- [Changelog](https://rdf4j.org/release-notes/)
+- [Blog](https://rdf4j.org/index.xml)
+- [GitHub](https://github.com/eclipse/rdf4j)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Eclipse Foundation
-**Email:** rdf4j-dev@eclipse.org
+**Kin Score 25.4** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 39.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 16.7 |
+| Access clarity | 7.9 |
+
+**Agent readiness 19.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/eclipse-rdf4j/](https://apis.io/providers/eclipse-rdf4j/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Eclipse RDF4J: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/eclipse-rdf4j/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
